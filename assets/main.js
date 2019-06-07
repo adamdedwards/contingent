@@ -16,7 +16,7 @@ diss :      {r: 0.0, lim: 1.0, dt: 0.0, cost: 5.0},
 monograph : {r: 0.0, lim: 1.0, dt: 0.0, cost: 10.0},
 volume :    {r: 0.0, lim: 10.0, dt: 0.0, cost: 10.0},
 outline :   {r: 0.0, lim: 0.0, dt: 0.0, cost: 10.0},
-money :     {r: 0.0, lim: 100.0, dt: 0.0, cost: 0.0},
+money :     {r: 1000.0, lim: 100.0, dt: -0.002, cost: 0.0},
 };
 
 function save() {
@@ -48,6 +48,9 @@ function init() {
     document.getElementById("dissertation_stock").innerHTML = state.diss.r.toFixed(precision);
     document.getElementById("monograph_stock").innerHTML = state.monograph.r.toFixed(precision);
     document.getElementById("volume_stock").innerHTML = state.volume.r.toFixed(precision);
+
+    document.getElementById("money_stock").innerHTML = state.money.r.toFixed(precision);
+
     document.getElementById("outline_stock").innerHTML = state.outline.r.toFixed(0);
 
     // LIMITS
@@ -83,6 +86,8 @@ window.setInterval(function(){
     update_diss(state.diss.dt);
     update_monograph(state.monograph.dt);
     update_volume(state.volume.dt);
+    update_money(state.money.dt);
+
     update_costs();
     update_flows();
 }, tick*1);
@@ -105,6 +110,7 @@ function update_flows(){
     document.getElementById("dissertation_dt").innerHTML = state.diss.dt.toFixed(precision);
     document.getElementById("monograph_dt").innerHTML =    state.monograph.dt.toFixed(precision);
     document.getElementById("volume_dt").innerHTML =       state.volume.dt.toFixed(precision);
+    document.getElementById("money_dt").innerHTML =       state.money.dt.toFixed(precision);
 }
 
 function update_costs(){
@@ -268,6 +274,20 @@ function update_volume(n){
     else {
         state.volume.r = 0;
         document.getElementById("volume_stock").innerHTML = '0';
+    }
+};
+
+function update_money(n){
+    state.money.r = Math.round(state.money.r*1000 + n*1000)/1000;
+//    if(state.money.r > state.money.lim) {
+//        state.money.r = state.money.lim;
+//    }
+    if(state.money.r > 0) {
+        document.getElementById("money_stock").innerHTML = state.money.r.toFixed(precision);
+    }
+    else {
+        state.money.r = 0;
+        document.getElementById("money_stock").innerHTML = '0';
     }
 };
 
