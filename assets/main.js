@@ -16,7 +16,7 @@ diss :      {r: 0.0, lim: 1.0, dt: 0.0, cost: 5.0},
 monograph : {r: 0.0, lim: 1.0, dt: 0.0, cost: 10.0},
 volume :    {r: 0.0, lim: 10.0, dt: 0.0, cost: 10.0},
 outline :   {r: 0.0, lim: 0.0, dt: 0.0, cost: 10.0},
-money :     {r: 1000.0, lim: 1000.0, dt: -0.002, cost: 0.0},
+money :     {r: 1000.0, lim: 1000.0, dt: -0.002, cost: 0.0}
 };
 
 function save() {
