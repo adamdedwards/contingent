@@ -18,9 +18,18 @@ var outline =   {r: 0.0, lim: 0.0, dt: 0.0, cost: 10.0};
 var bed =       {r: 0.0, lim: 0.0, dt: 0.0, cost: 10.0};
 var money =     {r: 0.0, lim: 100.0, dt: 0.0, cost: 0.0};
 
+function save() {
+  localStorage.setItem('time', JSON.stringify(time));
+  localStorage.setItem('word', JSON.stringify(word));
+}
+
+function load() {
+  time = JSON.parse(localStorage.getItem('time'));
+  word = JSON.parse(localStorage.getItem('word'));
+}
 
 function init() {
-
+    load();
     // STOCKS
     document.getElementById("time_stock").innerHTML = time;
 
