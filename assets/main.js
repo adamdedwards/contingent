@@ -1,6 +1,8 @@
 var tick = 125;
 var precision = 2;
 
+var SAVE_KEY = 'save';
+
 // RESOURCES
 var time = 0.0;
 var semester = 0.0;
@@ -18,9 +20,25 @@ var outline =   {r: 0.0, lim: 0.0, dt: 0.0, cost: 10.0};
 var bed =       {r: 0.0, lim: 0.0, dt: 0.0, cost: 10.0};
 var money =     {r: 0.0, lim: 100.0, dt: 0.0, cost: 0.0};
 
+var state = {
+    time = time;
+    word = word;
+};
 
+
+
+function save(state) {
+  localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+}
+
+function load() {
+  return JSON.parse(localStorage.getItem(SAVE_KEY));
+}
 
 function init() {
+    var state = load();
+    time = state.time;
+    words = state.word;
     // STOCKS
     document.getElementById("time_stock").innerHTML = time;
 
