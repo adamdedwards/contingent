@@ -24,9 +24,16 @@ function save() {
 }
 
 function load() {
+    if(localStorage.length > 0){
   time = JSON.parse(localStorage.getItem('time'));
   word = JSON.parse(localStorage.getItem('word'));
+};
 }
+
+function delete_save() {
+    localStorage.clear();
+    location.reload();
+};
 
 function init() {
     load();
