@@ -1,4 +1,4 @@
-# Contingent ◇∼👨
+# Contingent ◇∼👨‍🏫
 
 ## What?
 
