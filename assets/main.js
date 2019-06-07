@@ -72,10 +72,6 @@ window.setInterval(function(){
 
 function inc_word(n){ n=1;  word.r = Math.round(word.r*1000 + n*1000)/1000; };
 
-function inc_draft(n){  };
-function inc_chapter(n){  };
-function inc_diss(n){  };
-
 function update_flows(){
     word.dt =         0.0 + outline.r*0.01;
     graf.dt =         0.0;
@@ -125,6 +121,18 @@ function inc_graf(){
         document.getElementById("word_stock").innerHTML = word.r.toFixed(precision);
         document.getElementById("graf_stock").innerHTML = graf.r.toFixed(precision);
         document.getElementById("graf_cost").innerHTML = graf.cost.toFixed(precision);
+    }
+};
+
+function inc_draft(n){
+    if(graf.r >= draft.cost) {
+        graf.r = graf.r - draft.cost;
+        draft.r = draft.r + 1;
+        draft.cost = 10 + draft.r*1.05;
+
+        document.getElementById("graf_stock").innerHTML = graf.r.toFixed(precision);
+        document.getElementById("draft_stock").innerHTML = draft.r.toFixed(precision);
+        document.getElementById("draft_cost").innerHTML = draft.cost.toFixed(precision);
     }
 };
 
