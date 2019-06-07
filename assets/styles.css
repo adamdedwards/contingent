@@ -34,6 +34,10 @@ button:hover {
     padding: 20px;
 }
 
+.locked {
+    visibility: none;
+}
+
 .hidden {
     visibility: hidden;
 }
