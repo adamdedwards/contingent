@@ -8,8 +8,8 @@ var anxiety = 0.0;
 
 var word =      {r: 0.0, lim: 100.0, dt: 0.0};
 var sent =      {r: 0.0, lim: 20.0, dt: 0.0, cost: 10.0};
-var graf =      {r: 0.0, lim: 20.0, dt: 0.0, cost: 10.0};
-var draft =     {r: 0.0, lim: 10.0, dt: 0.0, cost: 40.0};
+var graf =      {r: 0.0, lim: 40.0, dt: 0.0, cost: 10.0};
+var draft =     {r: 0.0, lim: 10.0, dt: 0.0, cost: 20.0};
 var chapter =   {r: 0.0, lim: 10.0, dt: 0.0, cost: 10000.0};
 var diss =      {r: 0.0, lim: 1.0, dt: 0.0, cost: 5.0};
 var monograph = {r: 0.0, lim: 1.0, dt: 0.0, cost: 10.0};
