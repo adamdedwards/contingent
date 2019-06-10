@@ -16,7 +16,8 @@ diss :      {r: 0.0, lim: 1.0, dt: 0.0, cost: 5.0},
 monograph : {r: 0.0, lim: 1.0, dt: 0.0, cost: 10.0},
 volume :    {r: 0.0, lim: 10.0, dt: 0.0, cost: 10.0},
 outline :   {r: 0.0, lim: 0.0, dt: 0.0, cost: 10.0},
-money :     {r: 1000.0, lim: 1000.0, dt: -0.002, cost: 0.0}
+thought :   {r: 0.0, lim: 100.0, dt: 0.001},
+money :     {r: 1000.0, lim: 1000.0, dt: -0.0025, cost: 0.0}
 };
 
 function save() {
@@ -48,6 +49,7 @@ function init() {
     document.getElementById("dissertation_stock").innerHTML = state.diss.r.toFixed(precision);
     document.getElementById("monograph_stock").innerHTML = state.monograph.r.toFixed(precision);
     document.getElementById("volume_stock").innerHTML = state.volume.r.toFixed(precision);
+    document.getElementById("thought_stock").innerHTML = state.thought.r.toFixed(precision);
 
     document.getElementById("money_stock").innerHTML = state.money.r.toFixed(precision);
 
@@ -61,6 +63,7 @@ function init() {
     document.getElementById("chapter_limit").innerHTML = state.chapter.lim;
     document.getElementById("dissertation_limit").innerHTML = state.diss.lim;
     document.getElementById("monograph_limit").innerHTML = state.monograph.lim;
+    document.getElementById("thought_limit").innerHTML = state.thought.lim;
 
     // FLOWS
     document.getElementById("word_dt").innerHTML = state.word.dt.toFixed(precision); // multiply by (1000/tick) for per sec rate
@@ -70,6 +73,7 @@ function init() {
     document.getElementById("dissertation_dt").innerHTML = state.diss.dt.toFixed(precision);
     document.getElementById("monograph_dt").innerHTML = state.monograph.dt.toFixed(precision);
     document.getElementById("volume_dt").innerHTML = state.volume.dt.toFixed(precision);
+    document.getElementById("thought_dt").innerHTML = state.thought.dt.toFixed(precision);
 
    // COSTS
    document.getElementById("graf_cost").innerHTML = state.graf.cost.toFixed(precision);
@@ -87,9 +91,10 @@ window.setInterval(function(){
     update_monograph(state.monograph.dt);
     update_volume(state.volume.dt);
     update_money(state.money.dt);
+    update_thought(state.thought.dt);
 
-    update_costs();
     update_flows();
+    update_costs();
 }, tick*1);
 
 function inc_word(n){ n=1;  state.word.r = Math.round(state.word.r*1000 + n*1000)/1000; };
@@ -110,7 +115,8 @@ function update_flows(){
     document.getElementById("dissertation_dt").innerHTML = state.diss.dt.toFixed(precision);
     document.getElementById("monograph_dt").innerHTML =    state.monograph.dt.toFixed(precision);
     document.getElementById("volume_dt").innerHTML =       state.volume.dt.toFixed(precision);
-    document.getElementById("money_dt").innerHTML =       state.money.dt.toFixed(precision);
+    document.getElementById("money_dt").innerHTML =        state.money.dt.toFixed(precision);
+    document.getElementById("thought_dt").innerHTML =        state.thought.dt.toFixed(precision);
 }
 
 function update_costs(){
@@ -133,6 +139,9 @@ function update_time(){
 //    else if(semester % 2 == 1) {
 //        document.getElementById("semester").innerHTML = 'spring semester';
 //    }
+    if(time < 10) {
+        document.getElementById("alerttext").innerHTML = "You have 5 years of funding.";
+    }
 }
 
 function inc_graf(){
@@ -291,6 +300,19 @@ function update_money(n){
     }
 };
 
+function update_thought(n){
+    state.thought.r = Math.round(state.thought.r*1000 + n*1000)/1000;
+    if(state.thought.r > state.thought.lim) {
+        state.thought.r = state.thought.lim;
+    }
+    if(state.thought.r > 0) {
+        document.getElementById("thought_stock").innerHTML = state.thought.r.toFixed(precision);
+    }
+    else {
+        state.thought.r = 0;
+        document.getElementById("thought_stock").innerHTML = '0';
+    }
+};
 
 function hide() {
   var e = document.getElementById("myDIV");

@@ -14,41 +14,45 @@
 </head>
 
 <body onLoad="init()">
-
+<div class="gamewrapper">
 <h1>Contingent ◇∼👨‍🏫</h1>
 
-<p id="alert"> You have 5 years of funding.</p>
+<p id="alert"><span id="alerttext"></span></p>
 
 <div id="materials" style="width:280px; float:left;">
 <h3>Resources</h3>
 <div id="labels" style="width:120px; float:left;">
-<p><span id="word_label">Words:</span></p>
-<p><span id="graf_label">Grafs:</span></p>
-<p><span id="draft_label">Drafts:</span></p>
-<p><span id="chapter_label">Chapters:</span></p>
-<p><span id="dissertation_label">Dissertations:</span></p>
-<p><span id="monograph_label">Monographs:</span></p>
-<p><span id="volume_label">Volumes:</span></p>
-<p><span id="anxiety_label">Anxiety:</span></p>
+<p><span id="word_label">Word Count:</span></p>
+<p class="locked"><span id="graf_label">Grafs:</span></p>
+<p class="locked"><span id="draft_label">Drafts:</span></p>
+<p class="locked"><span id="chapter_label">Chapters:</span></p>
+<p class="locked"><span id="dissertation_label">Dissertations:</span></p>
+<p class="locked"><span id="monograph_label">Monographs:</span></p>
+<p class="locked"><span id="volume_label">Volumes:</span></p>
+<br>
+<p><span id="thought_label">Thoughts:</span></p>
+<p><span id="money_label">Money:</span></p>
+<p><span id="energy_label">Energy:</span></p>
 <br>
 <p><span id="time_label">Time:</span></p>
-<p><span id="ideas_label">Ideas:</span></p>
-<p><span id="money_label">Money:</span></p>
+<p><span id="anxiety_label">Anxiety:</span></p>
 </div>
 
 <div id="stocks" style="width:160px; float:left;">
 <p><span class="stock" id="word_stock"></span>/<span class="limit" id="word_limit"></span></p>
-<p><span class="stock" id="graf_stock"></span>/<span class="limit" id="graf_limit"></span></p>
-<p><span class="stock" id="draft_stock"></span>/<span class="limit" id="draft_limit"></span></p>
-<p><span class="stock" id="chapter_stock"></span>/<span class="limit" id="chapter_limit"></span></p>
-<p><span class="stock" id="dissertation_stock"></span>/<span class="limit" id="dissertation_limit"></span></p>
-<p><span class="stock" id="monograph_stock"></span>/<span class="limit" id="monograph_limit"></span></p>
-<p><span class="stock" id="volume_stock"></span>/<span class="limit" id="volume_limit"></span></p>
-<p><span class="stock" id="anxiety_stock"></span><span class="limit" id="anxiety_limit"></span></p>
+<p class="locked"><span class="stock" id="graf_stock"></span>/<span class="limit" id="graf_limit"></span></p>
+<p class="locked"><span class="stock" id="draft_stock"></span>/<span class="limit" id="draft_limit"></span></p>
+<p class="locked"><span class="stock" id="chapter_stock"></span>/<span class="limit" id="chapter_limit"></span></p>
+<p class="locked"><span class="stock" id="dissertation_stock"></span>/<span class="limit" id="dissertation_limit"></span></p>
+<p class="locked"><span class="stock" id="monograph_stock"></span>/<span class="limit" id="monograph_limit"></span></p>
+<p class="locked"><span class="stock" id="volume_stock"></span>/<span class="limit" id="volume_limit"></span></p>
+<br>
+<p><span class="stock" id="thought_stock"></span>/<span class="limit" id="thought_limit"></span></p>
+<p>$<span class="stock" id="money_stock"></span><span class="limit" id="money_limit"></span></p>
+<p><span class="stock" id="energy_stock"></span>/<span class="limit" id="energy_limit"></span></p>
 <br>
 <p><span class="stock" id="time_stock"></span>&nbsp;<span class="stock" id="year_stock"></span> years</p>
-<p><span class="stock" id="ideas_stock"></span><span class="limit" id="ideas_limit"></span></p>
-<p>$<span class="stock" id="money_stock"></span><span class="limit" id="money_limit"></span></p>
+<p><span class="stock" id="anxiety_stock"></span><span class="limit" id="anxiety_limit"></span></p>
 </div>
 </div>
 
@@ -56,12 +60,16 @@
 <h3>Rates</h3>
 <div id="rates" style="width:200px; float:left;">
 <p><span class="unit">&Delta;t:</span><span class="flow" id="word_dt"></span></p>
-<p><span class="unit">&Delta;t:</span><span class="flow" id="graf_dt"></span></p>
-<p><span class="unit">&Delta;t:</span><span class="flow" id="draft_dt"></span></p>
-<p><span class="unit">&Delta;t:</span><span class="flow" id="chapter_dt"></span></p>
-<p><span class="unit">&Delta;t:</span><span class="flow" id="dissertation_dt"></span></p>
-<p><span class="unit">&Delta;t:</span><span class="flow" id="monograph_dt"></span></p>
-<p><span class="unit">&Delta;t:</span><span class="flow" id="volume_dt"></span></p>
+<p class="locked"><span class="unit">&Delta;t:</span><span class="flow" id="graf_dt"></span></p>
+<p class="locked"><span class="unit">&Delta;t:</span><span class="flow" id="draft_dt"></span></p>
+<p class="locked"><span class="unit">&Delta;t:</span><span class="flow" id="chapter_dt"></span></p>
+<p class="locked"><span class="unit">&Delta;t:</span><span class="flow" id="dissertation_dt"></span></p>
+<p class="locked"><span class="unit">&Delta;t:</span><span class="flow" id="monograph_dt"></span></p>
+<p class="locked"><span class="unit">&Delta;t:</span><span class="flow" id="volume_dt"></span></p>
+<br>
+<p><span class="unit">&Delta;t:</span><span class="flow" id="thought_dt"></span></p>
+<p><span class="unit">&Delta;t:</span><span class="flow" id="money_dt"></span></p>
+<p><span class="unit">&Delta;t:</span><span class="flow" id="energy_dt"></span></p>
 </div>
 </div>
 
@@ -73,7 +81,7 @@
 <p id="draft"><button onClick="inc_draft()">write a draft</button></p>
 <p class="cost" >Cost: <span id="draft_cost"></span> grafs</p>
 <p id="chapter"><button onClick="inc_chapter()">write a chapter</button></p>
-<p class="cost" >Cost: <span id="chapter_cost"></span> words</p>
+<p class="cost" >Cost: <span id="chapter_cost"></span> drafts</p>
 <p id="dissertation"><button onClick="inc_dissertation()">write a dissertation</button></p>
 <p class="cost" >Cost: <span id="dissertation_cost"></span> chapters</p>
 <p id="monograph"><button onClick="inc_monograph()">write a monograph</button></p>
@@ -82,6 +90,12 @@
 
 <div id="research" style="width:18%; float:left;">
 <h3>Research</h3>
+<p id="outline"><button onClick="add_outline()">read an article</button><span class="stock" id="outline_stock"></span></p>
+<p class="cost">Cost: <span id="outline_cost"></span> words</p>
+<p id="outline"><button onClick="add_outline()">read a book</button><span class="stock" id="outline_stock"></span></p>
+<p class="cost">Cost: <span id="outline_cost"></span> words</p>
+<p id="outline"><button onClick="add_outline()">read an anthology</button><span class="stock" id="outline_stock"></span></p>
+<p class="cost">Cost: <span id="outline_cost"></span> words</p>
 <p id="outline"><button onClick="add_outline()">outline a paper</button><span class="stock" id="outline_stock"></span></p>
 <p class="cost">Cost: <span id="outline_cost"></span> words</p>
 <p id="seminar"><button onClick="function()">attend seminar</button><span class="stock" id="seminar_stock"></span></p>
@@ -93,28 +107,24 @@
 
 <div id="upgrades" style="width:28%; float:left;">
 <h3>Upgrades</h3>
-<p class="locked"><button onClick="function()">imposter syndrome</button><span class="stock" id="_stock"></span></p>
+<p><button onClick="sharper_pencils()">sharper pencils</button></p>
+<p class="cost">Cost: <span id="sharper_pencils_cost"></span> words</p>
 <p class="locked"><button onClick="function()">submit to grad conference</button><span class="stock" id="_stock"></span></p>
 <p class="locked"><button onClick="function()">submit to regional conference</button><span class="stock" id="_stock"></span></p>
 <p class="locked"><button onClick="function()">submit to national conference</button><span class="stock" id="_stock"></span></p>
 <p class="locked"><button onClick="function()">submit to specialist conference</button><span class="stock" id="_stock"></span></p>
 <p class="locked"><button onClick="function()">submit to int'l conference</button><span class="stock" id="_stock"></span></p>
 
-<br>
-
-<p><button onClick="function()">submit to low-tier journal</button><span class="stock" id="_stock"></span></p>
+<p class="locked"><button onClick="function()">submit to low-tier journal</button><span class="stock" id="_stock"></span></p>
 <p class="locked"><button onClick="function()">submit to mid-tier journal</button><span class="stock" id="_stock"></span></p>
 <p class="locked"><button onClick="function()">submit to top-tier journal</button><span class="stock" id="_stock"></span></p>
 
-<br>
-
+<p class="locked"><button onClick="function()">imposter syndrome</button><span class="stock" id="_stock"></span></p>
 <p class="locked"><button onClick="function()">health care</button><span class="stock" id="_stock"></span></p>
 <p class="locked"><button onClick="function()">join professional society</button><span class="stock" id="_stock"></span></p>
 <p class="locked"><button onClick="function()">unionize your workplace</button><span class="stock" id="_stock"></span></p>
 <p class="locked"><button onClick="function()">join a lab</button><span class="stock" id="_stock"></span></p>
 <p class="locked"><button onClick="function()">reading group</button><span class="stock" id="_stock"></span></p>
-
-<br>
 
 <p class="locked"><button onClick="function()">folio</button><span class="stock" id="_stock"></span></p>
 <p class="locked"><button onClick="function()">quarto</button><span class="stock" id="_stock"></span></p>
@@ -123,5 +133,11 @@
 
 <p><button onClick="save()">save</button></p>
 <p><button onClick="delete_save()">erase save</button></p>
+
+<div class="push"></div>
+</div>
+<div class="footer">
+<a href="https://patreon.com/adamdedwards">help me finish a dissertation of my own</a>
+</div>
 </body>
 </html>

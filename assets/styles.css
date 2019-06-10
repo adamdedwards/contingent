@@ -1,10 +1,14 @@
-body {margin-left: 32px; margin-top:32px;}
+html, body {margin-left: 16px; margin-top:16px; height: 100%;}
 
-h1 { font-family: 'Inconsolata', monospace; font-size: 36px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 41px; }
-h2 { font-family: 'Inconsolata', monospace; font-size: 30px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 35px; }
-h3 { font-family: 'Inconsolata', monospace; font-size: 27px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 32px; }
+h1 {font-family:'Inconsolata', monospace; font-size:36px; font-style:normal; font-variant:normal; font-weight:700; line-height:41px;}
+h2 {font-family:'Inconsolata', monospace; font-size:30px; font-style:normal; font-variant:normal; font-weight:700; line-height:35px;}
+h3 {font-family:'Inconsolata', monospace; font-size:27px; font-style:normal; font-variant:normal; font-weight:700; line-height:32px;}
+p {font-family:'Inconsolata', monospace; font-size:18px; font-style:normal; font-variant:normal; font-weight:400; line-height:1.2em;}
 
-p { font-family: 'Inconsolata', monospace; font-size: 18px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 1.2em; }
+a:link    {color: slateblue;  text-decoration: none;}
+a:visited {color: slateblue; text-decoration: none;}
+a:hover   {color: skyblue; text-decoration: none;}
+a:active  {color: skyblue; text-decoration: none;}
 
 button {
     margin: 0px 15px;
@@ -103,48 +107,25 @@ button:hover {
 }
 
 
-
-
-
-
-
-
+.gamewrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -68px; /* the bottom margin is the negative value of the footer's height */
+}
+.footer, .push {height: 68px;} /* .push must be the same height as .footer */
 
 #alert {
-    opacity: 0;
-
-    -webkit-animation: fadeout 20s; /* Safari, Chrome and Opera > 12.1 */
-       -moz-animation: fadeout 20s; /* Firefox < 16 */
-        -ms-animation: fadeout 20s; /* Internet Explorer */
-         -o-animation: fadeout 20s; /* Opera < 12.1 */
-            animation: fadeout 20s;
+  opacity: 0;
+  animation: fadeout 16s;
+  -webkit-animation: fadeout 16s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadeout 16s; /* Firefox < 16 */
+  -ms-animation: fadeout 16s; /* Internet Explorer */
+  -o-animation: fadeout 16s; /* Opera < 12.1 */
 }
 
-@keyframes fadeout {
-    from { opacity: 1; }
-    to   { opacity: 0; }
-}
-
-/* Firefox < 16 */
-@-moz-keyframes fadeout {
-    from { opacity: 1; }
-    to   { opacity: 0; }
-}
-
-/* Safari, Chrome and Opera > 12.1 */
-@-webkit-keyframes fadeout {
-    from { opacity: 1; }
-    to   { opacity: 0; }
-}
-
-/* Internet Explorer */
-@-ms-keyframes fadeout {
-    from { opacity: 1; }
-    to   { opacity: 0; }
-}
-
-/* Opera < 12.1 */
-@-o-keyframes fadeout {
-    from { opacity: 1; }
-    to   { opacity: 0; }
-}
+@keyframes fadeout {from {opacity: 1;} to {opacity: 0;}}
+@-webkit-keyframes fadeout {from {opacity: 1;} to {opacity: 0;}} /* Safari, Chrome and Opera > 12.1 */
+@-moz-keyframes fadeout {from {opacity: 1;} to {opacity: 0;}} /* Firefox < 16 */
+@-ms-keyframes fadeout {from {opacity: 1;} to {opacity: 0;}} /* Internet Explorer */
+@-o-keyframes fadeout {from {opacity: 1;} to {opacity: 0;}} /* Opera < 12.1 */
