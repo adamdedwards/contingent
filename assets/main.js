@@ -14,6 +14,9 @@ chapter :   {r: 0.0, lim: 10.0, dt: 0.0, cost: 16000.0},
 diss :      {r: 0.0, lim: 1.0, dt: 0.0, cost: 40000.0},
 monograph : {r: 0.0, lim: 1.0, dt: 0.0, cost: 400000.0},
 volume :    {r: 0.0, lim: 10.0, dt: 0.0, cost: 1600000.0},
+article :   {r: 1.0, lim: 0.0, dt: 0.0, cost: 10.0},
+book :      {r: 0.0, lim: 0.0, dt: 0.0, cost: 10.0},
+anth :      {r: 0.0, lim: 0.0, dt: 0.0, cost: 10.0},
 outline :   {r: 0.0, lim: 0.0, dt: 0.0, cost: 10.0},
 thought :   {r: 0.0, lim: 100.0, dt: 0.001},
 money :     {r: 1000.0, lim: 1000.0, dt: -0.0025, cost: 0.0},
@@ -54,6 +57,9 @@ function init() {
     document.getElementById("money_stock").innerHTML = state.money.r.toFixed(precision);
 
     document.getElementById("outline_stock").innerHTML = state.outline.r.toFixed(0);
+    document.getElementById("article_stock").innerHTML = state.article.r.toFixed(0);
+    document.getElementById("book_stock").innerHTML = state.book.r.toFixed(0);
+    document.getElementById("anth_stock").innerHTML = state.anth.r.toFixed(0);
 
     // LIMITS
     document.getElementById("word_limit").innerHTML = state.word.lim;
@@ -111,6 +117,9 @@ function update_costs(){
     document.getElementById("chapter_cost").innerHTML =      state.chapter.cost.toFixed(precision);
     document.getElementById("dissertation_cost").innerHTML = state.diss.cost.toFixed(precision);
     document.getElementById("monograph_cost").innerHTML =    state.monograph.cost.toFixed(precision);
+    document.getElementById("article_cost").innerHTML =      state.article.cost.toFixed(precision);
+    document.getElementById("book_cost").innerHTML =      state.book.cost.toFixed(precision);
+    document.getElementById("anth_cost").innerHTML =      state.anth.cost.toFixed(precision);
     document.getElementById("outline_cost").innerHTML =      state.outline.cost.toFixed(precision);
     document.getElementById("sharper_pencils_cost").innerHTML = state.tech.sharpcost.toFixed(precision);
 }
@@ -139,7 +148,7 @@ function inc_graf(){
     if(state.word.r >= state.graf.cost) {
         state.word.r = state.word.r - state.graf.cost;
         state.graf.r = state.graf.r + 1;
-        state.graf.cost = state.graf.cost + state.graf.r*1.05;
+        state.graf.cost = 10 + state.graf.r*1.05;
 
         document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
         document.getElementById("graf_stock").innerHTML = state.graf.r.toFixed(precision);
@@ -151,7 +160,7 @@ function inc_draft(n){
     if(state.graf.r >= state.draft.cost) {
         state.graf.r = state.graf.r - state.draft.cost;
         state.draft.r = state.draft.r + 1;
-        state.draft.cost = state.draft.cost + state.draft.r*1.05;
+        state.draft.cost = 4000 + state.draft.r*1.05;
 
         document.getElementById("graf_stock").innerHTML = state.graf.r.toFixed(precision);
         document.getElementById("draft_stock").innerHTML = state.draft.r.toFixed(precision);
