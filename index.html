@@ -36,7 +36,10 @@
 <br>
 <p><span id="time_label">Time:</span></p>
 <p><span id="anxiety_label">Anxiety:</span></p>
+<p style="position: absolute; height: 10px; bottom: 8; ">Current semester: <span id="semester"></span></p>
 </div>
+
+
 
 <div id="stocks" style="width:160px; float:left;">
 <p><span class="stock" id="word_stock"></span>/<span class="limit" id="word_limit"></span></p>
@@ -73,42 +76,32 @@
 </div>
 </div>
 
-<div id="actions" style="width:18%; float:left;">
-<h3>Actions</h3>
-<p id="word"><button onClick="inc_word()">write a word</button></p>
-<p id="graf"><button onClick="inc_graf()">write a paragraph</button></p>
-<p class="cost" >Cost: <span id="graf_cost"></span> words</p>
-<p id="draft"><button onClick="inc_draft()">write a draft</button></p>
-<p class="cost" >Cost: <span id="draft_cost"></span> grafs</p>
-<p id="chapter"><button onClick="inc_chapter()">write a chapter</button></p>
-<p class="cost" >Cost: <span id="chapter_cost"></span> drafts</p>
-<p id="dissertation"><button onClick="inc_dissertation()">write a dissertation</button></p>
-<p class="cost" >Cost: <span id="dissertation_cost"></span> chapters</p>
-<p id="monograph"><button onClick="inc_monograph()">write a monograph</button></p>
-<p class="cost" >Cost: <span id="monograph_cost"></span> dissertations</p>
+<div id="write" style="width:18%; float:left;">
+<h3>Write</h3>
+<div><button id="word" onClick="inc_word()">write a word</button></div>
+<div><button id="graf" onClick="inc_graf()">write a paragraph</button><p class="cost" >Cost: <span id="graf_cost"></span> words</p></div>
+<div><button id="draft" onClick="inc_draft()">write a draft</button><p class="cost" >Cost: <span id="draft_cost"></span> words</p></div>
+<div><button id="chapter" onClick="inc_chapter()">write a chapter</button><p class="cost" >Cost: <span id="chapter_cost"></span> words</p></div>
+<div><button id="dissertation" onClick="inc_dissertation()">write a dissertation</button><p class="cost" >Cost: <span id="dissertation_cost"></span> words</p></div>
+<div><button id="monograph" onClick="inc_monograph()">write a monograph</button><p class="cost" >Cost: <span id="monograph_cost"></span> words</p></div>
 </div>
 
 <div id="research" style="width:18%; float:left;">
 <h3>Research</h3>
-<p id="outline"><button onClick="add_outline()">read an article</button><span class="stock" id="outline_stock"></span></p>
-<p class="cost">Cost: <span id="outline_cost"></span> words</p>
-<p id="outline"><button onClick="add_outline()">read a book</button><span class="stock" id="outline_stock"></span></p>
-<p class="cost">Cost: <span id="outline_cost"></span> words</p>
-<p id="outline"><button onClick="add_outline()">read an anthology</button><span class="stock" id="outline_stock"></span></p>
-<p class="cost">Cost: <span id="outline_cost"></span> words</p>
-<p id="outline"><button onClick="add_outline()">outline a paper</button><span class="stock" id="outline_stock"></span></p>
-<p class="cost">Cost: <span id="outline_cost"></span> words</p>
-<p id="seminar"><button onClick="function()">attend seminar</button><span class="stock" id="seminar_stock"></span></p>
-<p class="cost">Cost: <span id="seminar_cost"></span> words</p>
-<p class="locked"><button onClick="function()">syllabus</button><span class="stock" id="_stock"></span></p>
-<p class="locked"><button onClick="function()">curriculum vitae</button><span class="stock" id="_stock"></span></p>
+<div><div><button onClick="function()">read an article</button><span class="stock" id="article_stock"></span></div><p class="cost">Cost: <span id="article_cost"></span> words</p></div>
+<div><div><button onClick="function()">read a book</button><span class="stock" id="book_stock"></span></div><p class="cost">Cost: <span id="book_cost"></span> words</p></div>
+<div><div><button onClick="function()">read an anthology</button><span class="stock" id="anth_stock"></span></div><p class="cost">Cost: <span id="anth_cost"></span> words</p></div>
+<div><div id="outline"><button onClick="add_outline()">outline a paper</button><span class="stock" id="outline_stock"></span></div><p class="cost">Cost: <span id="outline_cost"></span> words</p></div>
+<div><div><button id="seminar" onClick="function()">attend seminar</button><span class="stock" id="seminar_stock"></span></div><p class="cost">Cost: <span id="seminar_cost"></span> words</p></div>
+<div class="locked"><div><button onClick="function()">syllabus</button><span class="stock" id="_stock"></span></div></div>
+<div class="locked"><div><button onClick="function()">curriculum vitae</button><span class="stock" id="_stock"></span></div></div>
 
 </div>
 
 <div id="upgrades" style="width:28%; float:left;">
 <h3>Upgrades</h3>
-<p><button onClick="sharper_pencils()">sharper pencils</button></p>
-<p class="cost">Cost: <span id="sharper_pencils_cost"></span> words</p>
+<div><button id="sharper_pencils" onClick="sharper_pencils()">sharper pencils</button><p class="cost">Cost: <span id="sharper_pencils_cost"></span> words</p></div>
+
 <p class="locked"><button onClick="function()">submit to grad conference</button><span class="stock" id="_stock"></span></p>
 <p class="locked"><button onClick="function()">submit to regional conference</button><span class="stock" id="_stock"></span></p>
 <p class="locked"><button onClick="function()">submit to national conference</button><span class="stock" id="_stock"></span></p>
@@ -131,13 +124,14 @@
 <p class="locked"><button onClick="function()">octavo</button><span class="stock" id="_stock"></span></p>
 </div>
 
-<p><button onClick="save()">save</button></p>
-<p><button onClick="delete_save()">erase save</button></p>
+
 
 <div class="push"></div>
 </div>
 <div class="footer">
-<a href="https://patreon.com/adamdedwards">help me finish a dissertation of my own</a>
+<button style="right:2;" onClick="save()">save</button><button onClick="delete_save()">erase save</button>
+<br>
+<p><a href="https://patreon.com/adamdedwards">help me finish a dissertation of my own!</a></p>
 </div>
 </body>
 </html>

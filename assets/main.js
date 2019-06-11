@@ -8,16 +8,16 @@ var anxiety = 0.0;
 
 var state = {
 word :      {r: 0.0, lim: 100.0, dt: 0.0},
-sent :      {r: 0.0, lim: 20.0, dt: 0.0, cost: 10.0},
-graf :      {r: 0.0, lim: 40.0, dt: 0.0, cost: 10.0},
-draft :     {r: 0.0, lim: 10.0, dt: 0.0, cost: 20.0},
-chapter :   {r: 0.0, lim: 10.0, dt: 0.0, cost: 10000.0},
-diss :      {r: 0.0, lim: 1.0, dt: 0.0, cost: 5.0},
-monograph : {r: 0.0, lim: 1.0, dt: 0.0, cost: 10.0},
-volume :    {r: 0.0, lim: 10.0, dt: 0.0, cost: 10.0},
+graf :      {r: 0.0, lim: 40.0, dt: 0.0, cost: 40.0},
+draft :     {r: 0.0, lim: 10.0, dt: 0.0, cost: 4000.0},
+chapter :   {r: 0.0, lim: 10.0, dt: 0.0, cost: 16000.0},
+diss :      {r: 0.0, lim: 1.0, dt: 0.0, cost: 40000.0},
+monograph : {r: 0.0, lim: 1.0, dt: 0.0, cost: 400000.0},
+volume :    {r: 0.0, lim: 10.0, dt: 0.0, cost: 1600000.0},
 outline :   {r: 0.0, lim: 0.0, dt: 0.0, cost: 10.0},
 thought :   {r: 0.0, lim: 100.0, dt: 0.001},
-money :     {r: 1000.0, lim: 1000.0, dt: -0.0025, cost: 0.0}
+money :     {r: 1000.0, lim: 1000.0, dt: -0.0025, cost: 0.0},
+tech :      {sharp: false, sharpcost: 10}
 };
 
 function save() {
@@ -64,21 +64,6 @@ function init() {
     document.getElementById("dissertation_limit").innerHTML = state.diss.lim;
     document.getElementById("monograph_limit").innerHTML = state.monograph.lim;
     document.getElementById("thought_limit").innerHTML = state.thought.lim;
-
-    // FLOWS
-    document.getElementById("word_dt").innerHTML = state.word.dt.toFixed(precision); // multiply by (1000/tick) for per sec rate
-    document.getElementById("graf_dt").innerHTML = state.graf.dt.toFixed(precision);
-    document.getElementById("draft_dt").innerHTML = state.draft.dt.toFixed(precision);
-    document.getElementById("chapter_dt").innerHTML = state.chapter.dt.toFixed(precision);
-    document.getElementById("dissertation_dt").innerHTML = state.diss.dt.toFixed(precision);
-    document.getElementById("monograph_dt").innerHTML = state.monograph.dt.toFixed(precision);
-    document.getElementById("volume_dt").innerHTML = state.volume.dt.toFixed(precision);
-    document.getElementById("thought_dt").innerHTML = state.thought.dt.toFixed(precision);
-
-   // COSTS
-   document.getElementById("graf_cost").innerHTML = state.graf.cost.toFixed(precision);
-   document.getElementById("draft_cost").innerHTML = state.draft.cost.toFixed(precision);
-   document.getElementById("outline_cost").innerHTML = state.outline.cost.toFixed(precision);
 };
 
 window.setInterval(function(){
@@ -95,12 +80,13 @@ window.setInterval(function(){
 
     update_flows();
     update_costs();
+    update_viz();
 }, tick*1);
 
-function inc_word(n){ n=1;  state.word.r = Math.round(state.word.r*1000 + n*1000)/1000; };
+function inc_word(n){ n=1;  state.word.r = state.word.r + n; };
 
 function update_flows(){
-    state.word.dt =         0.0 + state.outline.r*0.01;
+    state.word.dt =         0.0 + state.outline.r*0.01 + Number(state.tech.sharp)*0.1;
     state.graf.dt =         0.0;
     state.draft.dt =        0.0;
     state.chapter.dt =      0.0;
@@ -126,6 +112,7 @@ function update_costs(){
     document.getElementById("dissertation_cost").innerHTML = state.diss.cost.toFixed(precision);
     document.getElementById("monograph_cost").innerHTML =    state.monograph.cost.toFixed(precision);
     document.getElementById("outline_cost").innerHTML =      state.outline.cost.toFixed(precision);
+    document.getElementById("sharper_pencils_cost").innerHTML = state.tech.sharpcost.toFixed(precision);
 }
 
 function update_time(){
@@ -133,22 +120,26 @@ function update_time(){
     semester = (time/16000).toFixed(0);
     document.getElementById("time_stock").innerHTML = (time/8).toFixed(0);
     document.getElementById("year_stock").innerHTML = (time/32000).toFixed(0);
-//    if(semester % 2 == 0) {
-//        document.getElementById("semester").innerHTML = 'fall semester';
-//    }
-//    else if(semester % 2 == 1) {
-//        document.getElementById("semester").innerHTML = 'spring semester';
-//    }
-    if(time < 10) {
-        document.getElementById("alerttext").innerHTML = "You have 5 years of funding.";
-    }
+
+    if((semester % 2) == 0) {document.getElementById("semester").innerHTML = "fall semester";}
+    else if((semester % 2) == 1) {document.getElementById("semester").innerHTML = "spring semester";}
+
+    if(time < 1) {document.getElementById("alerttext").innerHTML = "You have 5 years of funding.";}
+//    if((time+1 % 240) == 0) {save(); document.getElementById("alerttext").innerHTML = "Game saved!";}
 }
+
+function update_viz(){
+if(state.tech.sharp){document.getElementById("sharper_pencils").classList.add("locked");}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 function inc_graf(){
     if(state.word.r >= state.graf.cost) {
         state.word.r = state.word.r - state.graf.cost;
         state.graf.r = state.graf.r + 1;
-        state.graf.cost = 10 + state.graf.r*1.05;
+        state.graf.cost = state.graf.cost + state.graf.r*1.05;
 
         document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
         document.getElementById("graf_stock").innerHTML = state.graf.r.toFixed(precision);
@@ -160,7 +151,7 @@ function inc_draft(n){
     if(state.graf.r >= state.draft.cost) {
         state.graf.r = state.graf.r - state.draft.cost;
         state.draft.r = state.draft.r + 1;
-        state.draft.cost = 10 + state.draft.r*1.05;
+        state.draft.cost = state.draft.cost + state.draft.r*1.05;
 
         document.getElementById("graf_stock").innerHTML = state.graf.r.toFixed(precision);
         document.getElementById("draft_stock").innerHTML = state.draft.r.toFixed(precision);
@@ -171,9 +162,9 @@ function inc_draft(n){
 function add_outline(){
     if(state.word.r >= state.outline.cost) {
         state.word.r = state.word.r - state.outline.cost;
-        word.lim = word.lim + 10;
+        state.word.lim = state.word.lim + 10;
         state.outline.r = state.outline.r + 1;
-        state.outline.cost = 10 + state.outline.r*1.05;
+        state.outline.cost = state.outline.cost + state.outline.r*1.05;
 
         document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
         document.getElementById("word_limit").innerHTML = state.word.lim.toFixed(precision);        document.getElementById("outline_stock").innerHTML = state.outline.r.toFixed(0);
@@ -182,12 +173,12 @@ function add_outline(){
 };
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function update_word(n){
-    state.word.r = Math.round(state.word.r*1000 + n*1000)/1000;
+    state.word.r = state.word.r + n;
     if(state.word.r > state.word.lim) {
         state.word.r = state.word.lim;
     }
@@ -201,7 +192,7 @@ function update_word(n){
 };
 
 function update_graf(n){
-    state.graf.r = Math.round(state.graf.r*1000 + n*1000)/1000;
+    state.graf.r = state.graf.r + n;
     if(state.graf.r > state.graf.lim) {
         state.graf.r = state.graf.lim;
     }
@@ -298,7 +289,7 @@ function update_money(n){
         state.money.r = 0;
         document.getElementById("money_stock").innerHTML = '0';
     }
-};
+}
 
 function update_thought(n){
     state.thought.r = Math.round(state.thought.r*1000 + n*1000)/1000;
@@ -312,7 +303,13 @@ function update_thought(n){
         state.thought.r = 0;
         document.getElementById("thought_stock").innerHTML = '0';
     }
-};
+}
+
+function sharper_pencils() {
+    if(state.word.r >= state.tech.sharpcost) {
+    state.word.r = state.word.r - 10;
+    state.tech.sharp = true;}
+}
 
 function hide() {
   var e = document.getElementById("myDIV");

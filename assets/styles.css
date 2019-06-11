@@ -11,7 +11,7 @@ a:hover   {color: skyblue; text-decoration: none;}
 a:active  {color: skyblue; text-decoration: none;}
 
 button {
-    margin: 0px 15px;
+    margin: 0px 15px 10px;
     border: 0;
     border-radius: 8px;
     padding: 10px 20px;
@@ -70,50 +70,27 @@ button:hover {
 
 
 
-#actions .cost {
-    display: none;
-}
+#write .cost {display: none;}
+#research .cost {display: none;}
+#upgrades .cost {display: none;}
 
-#research .cost {
-    display: none;
-}
-
-#graf:hover + .cost {
-    display: block;
-}
-
-#draft:hover + .cost {
-    display: block;
-}
-
-#chapter:hover + .cost {
-    display: block;
-}
-
-#dissertation:hover + .cost {
-    display: block;
-}
-
-#monograph:hover + .cost {
-    display: block;
-}
-
-#outline:hover + .cost {
-    display: block;
-}
-
-#seminar:hover + .cost {
-    display: block;
-}
+#graf:hover + .cost {display: block;}
+#draft:hover + .cost {display: block;}
+#chapter:hover + .cost {display: block;}
+#dissertation:hover + .cost {display: block;}
+#monograph:hover + .cost {display: block;}
+#seminar:hover + .cost {display: block;}
+#outline:hover + .cost {display: block;}
+#sharper_pencils:hover + .cost {display: block;}
 
 
 .gamewrapper {
     min-height: 100%;
     height: auto !important;
     height: 100%;
-    margin: 0 auto -68px; /* the bottom margin is the negative value of the footer's height */
+    margin: 0 auto -160px; /* the bottom margin is the negative value of the footer's height */
 }
-.footer, .push {height: 68px;} /* .push must be the same height as .footer */
+.footer, .push {height: 160px;} /* .push must be the same height as .footer */
 
 #alert {
   opacity: 0;
