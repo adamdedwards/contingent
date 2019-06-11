@@ -14,10 +14,11 @@ chapter :   {r: 0.0, lim: 10.0, dt: 0.0, cost: 16000.0},
 diss :      {r: 0.0, lim: 1.0, dt: 0.0, cost: 40000.0},
 monograph : {r: 0.0, lim: 1.0, dt: 0.0, cost: 400000.0},
 volume :    {r: 0.0, lim: 10.0, dt: 0.0, cost: 1600000.0},
-article :   {r: 1.0, lim: 0.0, dt: 0.0, cost: 5.0},
+article :   {r: 0.0, lim: 0.0, dt: 0.0, cost: 5.0},
 book :      {r: 0.0, lim: 0.0, dt: 0.0, cost: 100.0},
 anth :      {r: 0.0, lim: 0.0, dt: 0.0, cost: 1000.0},
 outline :   {r: 0.0, lim: 0.0, dt: 0.0, cost: 10.0},
+seminar :   {r: 0.0, lim: 0.0, dt: 0.0, cost: 200.0},
 thought :   {r: 0.0, lim: 100.0, dt: 0.001},
 money :     {r: 1000.0, lim: 1000.0, dt: -0.0025, cost: 0.0},
 tech :      {sharp: false, sharpcost: 10}
@@ -56,6 +57,7 @@ function init() {
 
     document.getElementById("money_stock").innerHTML = state.money.r.toFixed(precision);
 
+    document.getElementById("seminar_stock").innerHTML = state.seminar.r.toFixed(0);
     document.getElementById("outline_stock").innerHTML = state.outline.r.toFixed(0);
     document.getElementById("article_stock").innerHTML = state.article.r.toFixed(0);
     document.getElementById("book_stock").innerHTML = state.book.r.toFixed(0);
@@ -121,6 +123,7 @@ function update_costs(){
     document.getElementById("book_cost").innerHTML =         state.book.cost.toFixed(precision);
     document.getElementById("anth_cost").innerHTML =         state.anth.cost.toFixed(precision);
     document.getElementById("outline_cost").innerHTML =      state.outline.cost.toFixed(precision);
+    document.getElementById("seminar_cost").innerHTML =      state.seminar.cost.toFixed(precision);
     document.getElementById("sharper_pencils_cost").innerHTML = state.tech.sharpcost.toFixed(precision);
 }
 
@@ -170,9 +173,9 @@ function inc_draft(n){
 
 function add_outline(){
     if(state.word.r >= state.outline.cost) {
+        state.outline.r++;
         state.word.r = state.word.r - state.outline.cost;
         state.word.lim = state.word.lim + 10;
-        state.outline.r = state.outline.r + 1;
         state.outline.cost = state.outline.cost + state.outline.r*1.05;
 
         document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
@@ -181,9 +184,22 @@ function add_outline(){
     }
 };
 
-function add_article(){return 0;};
+function add_article(){
+        if(state.word.r >= state.article.cost) {
+        state.word.r = state.word.r - state.article.cost;
+        state.word.lim = state.word.lim + 25;
+        state.article.r++;
+        state.article.cost = (state.article.cost + state.article.r)*1.05;
+
+        document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
+        document.getElementById("word_limit").innerHTML = state.word.lim.toFixed(precision);        document.getElementById("article_stock").innerHTML = state.article.r.toFixed(0);
+        document.getElementById("article_cost").innerHTML = state.article.cost.toFixed(precision);
+    }
+};
+
 function add_book(){return 0;};
 function add_anth(){return 0;};
+function add_seminar(){return 0;};
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

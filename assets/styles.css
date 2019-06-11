@@ -80,6 +80,9 @@ button:hover {
 #dissertation:hover + .cost {display: block;}
 #monograph:hover + .cost {display: block;}
 #seminar:hover + .cost {display: block;}
+#article:hover + .cost {display: block;}
+#book:hover + .cost {display: block;}
+#anthology:hover + .cost {display: block;}
 #outline:hover + .cost {display: block;}
 #sharper_pencils:hover + .cost {display: block;}
 
