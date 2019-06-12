@@ -20,7 +20,7 @@ anth :      {r: 0.0, lim: 0.0, dt: 0.0, cost: 1000.0},
 outline :   {r: 0.0, lim: 0.0, dt: 0.0, cost: 10.0},
 seminar :   {r: 0.0, lim: 0.0, dt: 0.0, cost: 200.0},
 thought :   {r: 0.0, lim: 100.0, dt: 0.001},
-money :     {r: 1000.0, lim: 1000.0, dt: -0.0025, cost: 0.0},
+money :     {r: 1000.0, lim: 100000.0, dt: -0.0025, cost: 0.0},
 tech :      {sharp: false, sharpcost: 10}
 };
 
@@ -94,7 +94,7 @@ window.setInterval(function(){
 function inc_word(n){ n=1;  state.word.r = state.word.r + n; };
 
 function update_flows(){
-    state.word.dt =         0.0 + state.outline.r*0.01 + Number(state.tech.sharp)*0.1;
+    state.word.dt =         0.0 + state.outline.r*0.01 + Number(state.tech.sharp)*0.125;
     state.graf.dt =         0.0;
     state.draft.dt =        0.0;
     state.chapter.dt =      0.0;
@@ -110,7 +110,7 @@ function update_flows(){
     document.getElementById("monograph_dt").innerHTML =    state.monograph.dt.toFixed(precision);
     document.getElementById("volume_dt").innerHTML =       state.volume.dt.toFixed(precision);
     document.getElementById("money_dt").innerHTML =        state.money.dt.toFixed(precision);
-    document.getElementById("thought_dt").innerHTML =        state.thought.dt.toFixed(precision);
+    document.getElementById("thought_dt").innerHTML =      state.thought.dt.toFixed(precision);
 }
 
 function update_costs(){
@@ -129,19 +129,28 @@ function update_costs(){
 
 function update_time(){
     time = time + 1;
-    semester = (time/16000).toFixed(0);
+    semester = (time/1600).toFixed(0);
     document.getElementById("time_stock").innerHTML = (time/8).toFixed(0);
-    document.getElementById("year_stock").innerHTML = (time/32000).toFixed(0);
+    document.getElementById("year_stock").innerHTML = (time/3200).toFixed(0);
 
     if((semester % 2) == 0) {document.getElementById("semester").innerHTML = "fall semester";}
     else if((semester % 2) == 1) {document.getElementById("semester").innerHTML = "spring semester";}
 
-    if(time < 1) {document.getElementById("alerttext").innerHTML = "You have 5 years of funding.";}
-//    if((time+1 % 240) == 0) {save(); document.getElementById("alerttext").innerHTML = "Game saved!";}
+    if(time == 1) {
+        document.getElementById("alerttext").innerHTML = "You have 5 years of funding.";
+        document.getElementById("alert").classList.add("fade");
+    }
+    if((time % 480) == 0) {
+            save();
+            document.getElementById("alert").classList.remove("hidden");
+            document.getElementById("alerttext").innerHTML = "Game saved!";
+            document.getElementById("alert").classList.add("fade");
+        setTimeout(function() {document.getElementById("alert").classList.remove("fade");
+                               document.getElementById("alert").classList.add("hidden");}, 10000);}
 }
 
 function update_viz(){
-if(state.tech.sharp){document.getElementById("sharper_pencils").classList.add("locked");}
+if(state.tech.sharp){document.getElementById("sharper_pencils").classList.add("hidden");}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -186,9 +195,9 @@ function add_outline(){
 
 function add_article(){
         if(state.word.r >= state.article.cost) {
+        state.article.r++;
         state.word.r = state.word.r - state.article.cost;
         state.word.lim = state.word.lim + 25;
-        state.article.r++;
         state.article.cost = (state.article.cost + state.article.r)*1.05;
 
         document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
@@ -197,9 +206,44 @@ function add_article(){
     }
 };
 
-function add_book(){return 0;};
-function add_anth(){return 0;};
-function add_seminar(){return 0;};
+function add_book(){
+        if(state.word.r >= state.book.cost) {
+        state.book.r++;
+        state.word.r = state.word.r - state.book.cost;
+        state.word.lim = state.word.lim + 100;
+        state.book.cost = (state.book.cost + state.book.r)*1.1;
+
+        document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
+        document.getElementById("word_limit").innerHTML = state.word.lim.toFixed(precision);        document.getElementById("book_stock").innerHTML = state.book.r.toFixed(0);
+        document.getElementById("book_cost").innerHTML = state.book.cost.toFixed(precision);
+    }
+};
+
+function add_anth(){
+        if(state.word.r >= state.anth.cost) {
+        state.anth.r++;
+        state.word.r = state.word.r - state.anth.cost;
+        state.word.lim = state.word.lim + 500;
+        state.anth.cost = (state.anth.cost + state.anth.r)*1.1;
+
+        document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
+        document.getElementById("word_limit").innerHTML = state.word.lim.toFixed(precision);        document.getElementById("anth_stock").innerHTML = state.anth.r.toFixed(0);
+        document.getElementById("anth_cost").innerHTML = state.anth.cost.toFixed(precision);
+    }
+};
+
+function add_seminar(){
+        if(state.word.r >= state.seminar.cost) {
+        state.seminar.r++;
+        state.word.r = state.word.r - state.seminar.cost;
+        state.thought.lim = state.thought.lim + 5;
+        state.seminar.cost = (state.seminar.cost + state.seminar.r)*1.05;
+
+        document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
+        document.getElementById("thought_limit").innerHTML = state.thought.lim.toFixed(precision);        document.getElementById("seminar_stock").innerHTML = state.seminar.r.toFixed(0);
+        document.getElementById("seminar_cost").innerHTML = state.seminar.cost.toFixed(precision);
+    }
+};
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -208,131 +252,68 @@ function add_seminar(){return 0;};
 
 function update_word(n){
     state.word.r = state.word.r + n;
-    if(state.word.r > state.word.lim) {
-        state.word.r = state.word.lim;
-    }
-    if(state.word.r > 0) {
-        document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
-    }
-    else {
-        state.word.r = 0;
-        document.getElementById("word_stock").innerHTML = '0';
-    }
+    if(state.word.r > state.word.lim) {state.word.r = state.word.lim;}
+    if(state.word.r > 0) {document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);}
+    else {state.word.r = 0; document.getElementById("word_stock").innerHTML = '0';}
 };
 
 function update_graf(n){
     state.graf.r = state.graf.r + n;
-    if(state.graf.r > state.graf.lim) {
-        state.graf.r = state.graf.lim;
-    }
-    if(state.graf.r > 0) {
-        document.getElementById("graf_stock").innerHTML = state.graf.r.toFixed(precision);
-    }
-    else {
-        state.graf.r = 0;
-        document.getElementById("graf_stock").innerHTML = '0';
-    }
+    if(state.graf.r > state.graf.lim) {state.graf.r = state.graf.lim;}
+    if(state.graf.r > 0) {document.getElementById("graf_stock").innerHTML = state.graf.r.toFixed(precision);}
+    else {state.graf.r = 0; document.getElementById("graf_stock").innerHTML = '0';}
 };
 
 function update_draft(n){
-    state.draft.r = Math.round(state.draft.r*1000 + n*1000)/1000;
-    if(state.draft.r > state.draft.lim) {
-        state.draft.r = state.draft.lim;
-    }
-    if(state.draft.r > 0) {
-        document.getElementById("draft_stock").innerHTML = state.draft.r.toFixed(precision);
-    }
-    else {
-        state.draft.r = 0;
-        document.getElementById("draft_stock").innerHTML = '0';
-    }
+    state.draft.r = state.draft.r + n;
+    if(state.draft.r > state.draft.lim) {state.draft.r = state.draft.lim;}
+    if(state.draft.r > 0) {document.getElementById("draft_stock").innerHTML = state.draft.r.toFixed(precision);}
+    else {state.draft.r = 0; document.getElementById("draft_stock").innerHTML = '0';}
 };
 
-
 function update_chapter(n){
-    state.chapter.r = Math.round(state.chapter.r*1000 + n*1000)/1000;
-    if(state.chapter.r > state.chapter.lim) {
-        state.chapter.r = state.chapter.lim;
-    }
-    if(state.chapter.r > 0) {
-        document.getElementById("chapter_stock").innerHTML = state.chapter.r.toFixed(precision);
-    }
-    else {
-        state.chapter.r = 0;
-        document.getElementById("chapter_stock").innerHTML = '0';
-    }
+    state.chapter.r = state.chapter.r + n;
+    if(state.chapter.r > state.chapter.lim) {state.chapter.r = state.chapter.lim;}
+    if(state.chapter.r > 0) {document.getElementById("chapter_stock").innerHTML = state.chapter.r.toFixed(precision);}
+    else {state.chapter.r = 0; document.getElementById("chapter_stock").innerHTML = '0';}
 };
 
 function update_diss(n){
-    state.diss.r = Math.round(state.diss.r*1000 + n*1000)/1000;
-    if(state.diss.r > state.diss.lim) {
-        state.diss.r = state.diss.lim;
-    }
-    if(state.diss.r > 0) {
-        document.getElementById("dissertation_stock").innerHTML = state.diss.r.toFixed(precision);
-    }
-    else {
-        state.diss.r = 0;
-        document.getElementById("dissertation_stock").innerHTML = '0';
-    }
+    state.diss.r = state.diss.r + n;
+    if(state.diss.r > state.diss.lim) {state.diss.r = state.diss.lim;}
+    if(state.diss.r > 0) {document.getElementById("dissertation_stock").innerHTML = state.diss.r.toFixed(precision);}
+    else {state.diss.r = 0; document.getElementById("dissertation_stock").innerHTML = '0';}
 };
 
-
 function update_monograph(n){
-    state.monograph.r = Math.round(state.monograph.r*1000 + n*1000)/1000;
-    if(state.monograph.r > state.monograph.lim) {
-        state.monograph.r = state.monograph.lim;
-    }
-    if(state.monograph.r > 0) {
-        document.getElementById("monograph_stock").innerHTML = state.monograph.r.toFixed(precision);
-    }
-    else {
-        state.monograph.r = 0;
-        document.getElementById("monograph_stock").innerHTML = '0';
-    }
+    state.monograph.r = state.monograph.r + n;
+    if(state.monograph.r > state.monograph.lim) {state.monograph.r = state.monograph.lim;}
+    if(state.monograph.r > 0) {document.getElementById("monograph_stock").innerHTML = state.monograph.r.toFixed(precision);}
+    else {state.monograph.r = 0; document.getElementById("monograph_stock").innerHTML = '0';}
 };
 
 function update_volume(n){
-    state.volume.r = Math.round(state.volume.r*1000 + n*1000)/1000;
-    if(state.volume.r > state.volume.lim) {
-        state.volume.r = state.volume.lim;
-    }
-    if(state.volume.r > 0) {
-        document.getElementById("volume_stock").innerHTML = state.volume.r.toFixed(precision);
-    }
-    else {
-        state.volume.r = 0;
-        document.getElementById("volume_stock").innerHTML = '0';
-    }
+    state.volume.r = state.volume.r + n;
+    if(state.volume.r > state.volume.lim) {state.volume.r = state.volume.lim;}
+    if(state.volume.r > 0) {document.getElementById("volume_stock").innerHTML = state.volume.r.toFixed(precision);}
+    else {state.volume.r = 0; document.getElementById("volume_stock").innerHTML = '0';}
 };
 
 function update_money(n){
-    state.money.r = Math.round(state.money.r*1000 + n*1000)/1000;
-//    if(state.money.r > state.money.lim) {
-//        state.money.r = state.money.lim;
-//    }
-    if(state.money.r > 0) {
-        document.getElementById("money_stock").innerHTML = state.money.r.toFixed(precision);
-    }
-    else {
-        state.money.r = 0;
-        document.getElementById("money_stock").innerHTML = '0';
-    }
-}
+    state.money.r = state.money.r + n;
+    if(state.money.r > state.money.lim) {state.money.r = state.money.lim;}
+    if(state.money.r > 0) {document.getElementById("money_stock").innerHTML = state.money.r.toFixed(precision);}
+    else {state.money.r = 0; document.getElementById("money_stock").innerHTML = '0';}
+};
+
 
 function update_thought(n){
-    state.thought.r = Math.round(state.thought.r*1000 + n*1000)/1000;
-    if(state.thought.r > state.thought.lim) {
-        state.thought.r = state.thought.lim;
-    }
-    if(state.thought.r > 0) {
-        document.getElementById("thought_stock").innerHTML = state.thought.r.toFixed(precision);
-    }
-    else {
-        state.thought.r = 0;
-        document.getElementById("thought_stock").innerHTML = '0';
-    }
-}
+    state.thought.r = state.thought.r + n;
+    if(state.thought.r > state.thought.lim) {state.thought.r = state.thought.lim;}
+    if(state.thought.r > 0) {document.getElementById("thought_stock").innerHTML = state.thought.r.toFixed(precision);}
+    else {state.thought.r = 0; document.getElementById("thought_stock").innerHTML = '0';}
+};
+
 
 function sharper_pencils() {
     if(state.word.r >= state.tech.sharpcost) {
@@ -340,7 +321,8 @@ function sharper_pencils() {
     state.tech.sharp = true;}
 }
 
-function hide() {
-  var e = document.getElementById("myDIV");
-  e.classList.add("unhide");
-}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function darkmode() {
+  $('.darkmode').toggleClass('darkmode-active');
+};
