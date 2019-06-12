@@ -7,6 +7,7 @@ var semester = 0.0;
 var anxiety = 0.0;
 
 var state = {
+night :     false,
 word :      {r: 0.0, lim: 100.0, dt: 0.0},
 graf :      {r: 0.0, lim: 40.0, dt: 0.0, cost: 40.0},
 draft :     {r: 0.0, lim: 10.0, dt: 0.0, cost: 4000.0},
@@ -20,7 +21,7 @@ anth :      {r: 0.0, lim: 0.0, dt: 0.0, cost: 1000.0},
 outline :   {r: 0.0, lim: 0.0, dt: 0.0, cost: 10.0},
 seminar :   {r: 0.0, lim: 0.0, dt: 0.0, cost: 200.0},
 thought :   {r: 0.0, lim: 100.0, dt: 0.001},
-money :     {r: 1000.0, lim: 100000.0, dt: -0.0025, cost: 0.0},
+money :     {r: 1000.0, lim: 100000.0, dt: -0.0225, cost: 0.0},
 tech :      {sharp: false, sharpcost: 10}
 };
 
@@ -43,6 +44,7 @@ function delete_save() {
 
 function init() {
     load();
+    if(state.night) {darkmode();}
     // STOCKS
     document.getElementById("time_stock").innerHTML = time;
 
@@ -133,8 +135,8 @@ function update_time(){
     document.getElementById("time_stock").innerHTML = (time/8).toFixed(0);
     document.getElementById("year_stock").innerHTML = (time/3200).toFixed(0);
 
-    if((semester % 2) == 0) {document.getElementById("semester").innerHTML = "fall semester";}
-    else if((semester % 2) == 1) {document.getElementById("semester").innerHTML = "spring semester";}
+    if((semester % 2) == 0) {document.getElementById("semester").innerHTML = "fall";}
+    else if((semester % 2) == 1) {document.getElementById("semester").innerHTML = "spring";}
 
     if(time == 1) {
         document.getElementById("alerttext").innerHTML = "You have 5 years of funding.";
@@ -325,4 +327,6 @@ function sharper_pencils() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function darkmode() {
   $('.darkmode').toggleClass('darkmode-active');
+  if(state.night) {state.night = false;}
+  else {state.night = true;}
 };

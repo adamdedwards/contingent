@@ -21,7 +21,7 @@
 <p id="alert"><span id="alerttext"></span></p>
 
 <div id="materials" style="width:280px; float:left;">
-<h3>Resources</h3>
+<h3 style="padding-left:0px;">Resources</h3>
 <div id="labels" style="width:120px; float:left;">
 <p><span id="word_label">Word Count:</span></p>
 <p class="locked"><span id="graf_label">Grafs:</span></p>
@@ -61,7 +61,7 @@
 </div>
 
 <div id="rate" style="width:210px; float:left;">
-<h3>Rates</h3>
+<h3 style="padding-left:30px;">Rates</h3>
 <div id="rates" style="width:200px; float:left;">
 <p><span class="unit">&Delta;t:</span><span class="flow" id="word_dt"></span></p>
 <p class="locked"><span class="unit">&Delta;t:</span><span class="flow" id="graf_dt"></span></p>
@@ -96,12 +96,20 @@
 <div><div id="seminar"><button onClick="add_seminar()">attend seminar</button><span class="stock" id="seminar_stock"></span></div><p class="cost">Go to class.<br><br>Cost: <span id="seminar_cost"></span> words</p></div>
 <div class="locked"><div><button onClick="function()">syllabus</button><span class="stock" id="_stock"></span></div></div>
 <div class="locked"><div><button onClick="function()">curriculum vitae</button><span class="stock" id="_stock"></span></div></div>
+<div class="locked"><div><button onClick="function()">office hours</button><span class="stock" id="_stock"></span></div></div>
 
 </div>
 
 <div id="upgrades" style="width:28%; float:left;">
 <h3>Upgrades</h3>
 <div><button id="sharper_pencils" onClick="sharper_pencils()">sharper pencils</button><p class="cost">Sharper pencils for sharper prose.<br><br>Cost: <span id="sharper_pencils_cost"></span> words</p></div>
+<div><button id="word_processor" onClick="word_processor()">word processor</button><p class="cost">Heavily processed words from concentrate.<br><br>Cost: <span id="word_processor_cost"></span> words</p></div>
+
+
+<p class="locked"><button onClick="function()">submit to local newspaper</button><span class="stock" id="_stock"></span></p>
+<p class="locked"><button onClick="function()">submit to regional magazine</button><span class="stock" id="_stock"></span></p>
+<p class="locked"><button onClick="function()">submit to disciplinary blog</button><span class="stock" id="_stock"></span></p>
+<p class="locked"><button onClick="function()">submit to national publication</button><span class="stock" id="_stock"></span></p>
 
 <p class="locked"><button onClick="function()">submit to grad conference</button><span class="stock" id="_stock"></span></p>
 <p class="locked"><button onClick="function()">submit to regional conference</button><span class="stock" id="_stock"></span></p>
@@ -130,7 +138,7 @@
 <div class="push"></div>
 </div>
 <div class="footer">
-<button style="right:2;" onClick="save()">save</button><button onClick="delete_save()">erase save</button><button id="darkmode" onclick="darkmode()">Dark Mode</button>
+<button style="right:2;" onClick="save()">save</button><button onClick="delete_save()">erase save</button><button id="darkmode" onclick="darkmode()">night mode</button>
 <br>
 <p><a href="https://patreon.com/adamdedwards">help me finish a dissertation of my own!</a></p>
 </div>
