@@ -96,7 +96,7 @@ window.setInterval(function(){
 function inc_word(n){ n=1;  state.word.r = state.word.r + n; };
 
 function update_flows(){
-    state.word.dt =         0.0 + state.outline.r*0.01 + Number(state.tech.sharp)*0.125 + Number(state.tech.sharp)*1;
+    state.word.dt =         0.0 + state.outline.r*0.01 + Number(state.tech.sharp)*0.125 + Number(state.tech.process)*1;
     state.graf.dt =         0.0;
     state.draft.dt =        0.0;
     state.chapter.dt =      0.0;
