@@ -22,7 +22,7 @@ outline :   {r: 0.0, lim: 0.0, dt: 0.0, cost: 10.0},
 seminar :   {r: 0.0, lim: 0.0, dt: 0.0, cost: 200.0},
 thought :   {r: 0.0, lim: 100.0, dt: 0.001},
 money :     {r: 1000.0, lim: 100000.0, dt: -0.0225, cost: 0.0},
-tech :      {sharp: false, sharpcost: 10}
+tech :      {sharp: false, sharpcost: 10, process: false, processcost: 10}
 };
 
 function save() {
@@ -153,6 +153,7 @@ function update_time(){
 
 function update_viz(){
 if(state.tech.sharp){document.getElementById("sharper_pencils").classList.add("hidden");}
+if(state.tech.process){document.getElementById("word_processor").classList.add("hidden");}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -319,8 +320,14 @@ function update_thought(n){
 
 function sharper_pencils() {
     if(state.word.r >= state.tech.sharpcost) {
-    state.word.r = state.word.r - 10;
+    state.word.r = state.word.r - state.tech.sharpcost;
     state.tech.sharp = true;}
+}
+
+function word_processor() {
+    if(state.word.r >= state.tech.processcost) {
+    state.word.r = state.word.r - state.tech.processcost;
+    state.tech.process = true;}
 }
 
 
