@@ -127,6 +127,7 @@ function update_costs(){
     document.getElementById("outline_cost").innerHTML =      state.outline.cost.toFixed(precision);
     document.getElementById("seminar_cost").innerHTML =      state.seminar.cost.toFixed(precision);
     document.getElementById("sharper_pencils_cost").innerHTML = state.tech.sharpcost.toFixed(precision);
+    document.getElementById("word_processor_cost").innerHTML = state.tech.processcost.toFixed(precision);
 }
 
 function update_time(){
