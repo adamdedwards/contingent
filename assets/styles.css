@@ -38,23 +38,29 @@ button:hover {
     padding: 20px;
 }
 
-.locked {display: none;}
-.hidden {visibility: hidden;
-         opacity: 0;
-         transition: visibility 0s 1s, opacity 1s linear; }
-.unhidden {visibility: visible;
-           opacity: 1;
-           transition: opacity 1s linear;}
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 1s, opacity 1s linear;
+    display: none;}
+.unhidden {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 1s linear;}
 
 .stock {margin: 0px 15px;}
 .limit {margin: 0px 10px 0px 5px;}
 .flow {margin: 0px 30px 0px 0px;}
 .unit {margin: 0px 0px 0px 30px;}
 
+p.cost {font-size:14px; font-variant:normal; font-weight:400; line-height:1em;}
+
 #write .cost {display: none;}
 #research .cost {display: none;}
 #upgrades .cost {display: none;}
 
+/*UPGRADES*/
+#sent:hover + .cost {display: block;}
 #graf:hover + .cost {display: block;}
 #draft:hover + .cost {display: block;}
 #chapter:hover + .cost {display: block;}
@@ -68,7 +74,20 @@ button:hover {
 #sharper_pencils:hover + .cost {display: block;}
 #word_processor:hover + .cost {display: block;}
 
-p.cost {font-size:14px; font-variant:normal; font-weight:400; line-height:1em;}
+/*PUNCTUATION UPGRADES*/
+#period:hover + .cost {display: block;}
+#comma:hover + .cost {display: block;}
+#single_quote:hover + .cost {display: block;}
+#en_dash:hover + .cost {display: block;}
+#semicolon:hover + .cost {display: block;}
+#colon:hover + .cost {display: block;}
+#double_quote:hover + .cost {display: block;}
+#ellipsis:hover + .cost {display: block;}
+#em_dash:hover + .cost {display: block;}
+#scare_quote:hover + .cost {display: block;}
+#guillemets:hover + .cost {display: block;}
+#weird_s:hover + .cost {display: block;}
+
 
 
 .gamewrapper {
@@ -78,6 +97,8 @@ p.cost {font-size:14px; font-variant:normal; font-weight:400; line-height:1em;}
     margin: 0 auto -160px; /* the bottom margin is the negative value of the footer's height */
 }
 .footer, .push {height: 160px;} /* .push must be the same height as .footer */
+
+
 
 .fade {
   opacity: 0;
@@ -93,7 +114,6 @@ p.cost {font-size:14px; font-variant:normal; font-weight:400; line-height:1em;}
 @-moz-keyframes fadeout {from {opacity: 1;} to {opacity: 0;}} /* Firefox < 16 */
 @-ms-keyframes fadeout {from {opacity: 1;} to {opacity: 0;}} /* Internet Explorer */
 @-o-keyframes fadeout {from {opacity: 1;} to {opacity: 0;}} /* Opera < 12.1 */
-
 
 .darkmode {
   -webkit-transition: all 2s ease;

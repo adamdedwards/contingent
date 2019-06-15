@@ -9,18 +9,20 @@ var anxiety = 0.0;
 var state = {
 night :     false,
 word :      {r: 0.0, lim: 100.0, dt: 0.0},
-graf :      {r: 0.0, lim: 40.0, dt: 0.0, cost: 40.0},
-draft :     {r: 0.0, lim: 10.0, dt: 0.0, cost: 4000.0},
-chapter :   {r: 0.0, lim: 10.0, dt: 0.0, cost: 16000.0},
-diss :      {r: 0.0, lim: 1.0, dt: 0.0, cost: 40000.0},
-monograph : {r: 0.0, lim: 1.0, dt: 0.0, cost: 400000.0},
-volume :    {r: 0.0, lim: 10.0, dt: 0.0, cost: 1600000.0},
+sent :      {r: 0.0, lim: 40.0, dt: 0.0, cost: 10.0},
+graf :      {r: 0.0, lim: 40.0, dt: 0.0, cost: 10.0},
+draft :     {r: 0.0, lim: 10.0, dt: 0.0, cost: 400.0},
+chapter :   {r: 0.0, lim: 10.0, dt: 0.0, cost: 1600.0},
+diss :      {r: 0.0, lim: 1.0, dt: 0.0, cost: 4000.0},
+monograph : {r: 0.0, lim: 1.0, dt: 0.0, cost: 40000.0},
+volume :    {r: 0.0, lim: 10.0, dt: 0.0, cost: 160000.0},
 article :   {r: 0.0, lim: 0.0, dt: 0.0, cost: 5.0},
 book :      {r: 0.0, lim: 0.0, dt: 0.0, cost: 100.0},
 anth :      {r: 0.0, lim: 0.0, dt: 0.0, cost: 1000.0},
 outline :   {r: 0.0, lim: 0.0, dt: 0.0, cost: 10.0},
 seminar :   {r: 0.0, lim: 0.0, dt: 0.0, cost: 200.0},
 thought :   {r: 0.0, lim: 100.0, dt: 0.001},
+anxiety :   {r: 0.0, lim: 100.0, dt: 0.00025},
 money :     {r: 1000.0, lim: 100000.0, dt: -0.0225, cost: 0.0},
 tech :      {sharp: false, sharpcost: 10, process: false, processcost: 10}
 };
@@ -49,6 +51,7 @@ function init() {
     document.getElementById("time_stock").innerHTML = time;
 
     document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
+    document.getElementById("sent_stock").innerHTML = state.sent.r.toFixed(precision);
     document.getElementById("graf_stock").innerHTML = state.graf.r.toFixed(precision);
     document.getElementById("draft_stock").innerHTML = state.draft.r.toFixed(precision);
     document.getElementById("chapter_stock").innerHTML = state.chapter.r.toFixed(precision);
@@ -67,6 +70,7 @@ function init() {
 
     // LIMITS
     document.getElementById("word_limit").innerHTML = state.word.lim;
+    document.getElementById("sent_limit").innerHTML = state.sent.lim;
     document.getElementById("graf_limit").innerHTML = state.graf.lim;
     document.getElementById("draft_limit").innerHTML = state.draft.lim;
     document.getElementById("volume_limit").innerHTML = state.volume.lim;
@@ -79,6 +83,7 @@ function init() {
 window.setInterval(function(){
     update_time();
     update_word(state.word.dt);
+    update_sent(state.sent.dt);
     update_graf(state.graf.dt);
     update_draft(state.draft.dt);
     update_chapter(state.chapter.dt);
@@ -93,10 +98,9 @@ window.setInterval(function(){
     update_viz();
 }, tick*1);
 
-function inc_word(n){ n=1;  state.word.r = state.word.r + n; };
-
 function update_flows(){
-    state.word.dt =         0.0 + state.outline.r*0.01 + Number(state.tech.sharp)*0.125 + Number(state.tech.process)*1.0;
+    state.word.dt =         0.0 + state.outline.r*0.01 + Number(state.tech.sharp)*0.25 + Number(state.tech.process)*1.0;
+    state.sent.dt =         0.0;
     state.graf.dt =         0.0;
     state.draft.dt =        0.0;
     state.chapter.dt =      0.0;
@@ -105,6 +109,7 @@ function update_flows(){
     state.volume.dt =       0.0;
 
     document.getElementById("word_dt").innerHTML =         state.word.dt.toFixed(precision);
+    document.getElementById("sent_dt").innerHTML =         state.sent.dt.toFixed(precision);
     document.getElementById("graf_dt").innerHTML =         state.graf.dt.toFixed(precision);
     document.getElementById("draft_dt").innerHTML =        state.draft.dt.toFixed(precision);
     document.getElementById("chapter_dt").innerHTML =      state.chapter.dt.toFixed(precision);
@@ -116,6 +121,7 @@ function update_flows(){
 }
 
 function update_costs(){
+    document.getElementById("sent_cost").innerHTML =         state.sent.cost.toFixed(precision);
     document.getElementById("graf_cost").innerHTML =         state.graf.cost.toFixed(precision);
     document.getElementById("draft_cost").innerHTML =        state.draft.cost.toFixed(precision);
     document.getElementById("chapter_cost").innerHTML =      state.chapter.cost.toFixed(precision);
@@ -132,9 +138,9 @@ function update_costs(){
 
 function update_time(){
     time = time + 1;
-    semester = (time/1600).toFixed(0);
+    semester = (time/40000).toFixed(0);
     document.getElementById("time_stock").innerHTML = (time/8).toFixed(0);
-    document.getElementById("year_stock").innerHTML = (time/3200).toFixed(0);
+    document.getElementById("year_stock").innerHTML = (Math.floor(time/80000) +1).toFixed(0);
 
     if((semester % 2) == 0) {document.getElementById("semester").innerHTML = "fall";}
     else if((semester % 2) == 1) {document.getElementById("semester").innerHTML = "spring";}
@@ -155,18 +161,41 @@ function update_time(){
 function update_viz(){
 if(state.tech.sharp){document.getElementById("sharper_pencils").classList.add("hidden");}
 if(state.tech.process){document.getElementById("word_processor").classList.add("hidden");}
+if(state.word.r >= 10.0){document.getElementById("sent_label").classList.toggle("hidden",false);
+document.getElementById("sent").classList.toggle("hidden",false);
+document.getElementById("sent_disp").classList.toggle("hidden",false);
+document.getElementById("sent_rate").classList.toggle("hidden",false);}
+if(state.sent.r >= 10.0){document.getElementById("graf_label").classList.toggle("hidden",false);
+document.getElementById("graf").classList.toggle("hidden",false);
+document.getElementById("graf_disp").classList.toggle("hidden",false);
+document.getElementById("graf_rate").classList.toggle("hidden",false);}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+function inc_word(n){ n=1;  state.word.r = state.word.r + n; };
+
+function inc_sent(n){
+    n = 1;
+    if(state.sent.lim > state.sent.r && state.word.r >= state.sent.cost) {
+        state.word.r = state.word.r - state.sent.cost;
+        state.sent.r = state.sent.r + n;
+        state.sent.cost = 10 + state.sent.r*1.002;
+
+        document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
+        document.getElementById("sent_stock").innerHTML = state.sent.r.toFixed(precision);
+        document.getElementById("sent_cost").innerHTML = state.sent.cost.toFixed(precision);
+    }
+};
+
 
 function inc_graf(){
-    if(state.word.r >= state.graf.cost) {
-        state.word.r = state.word.r - state.graf.cost;
+    if(state.graf.lim > state.graf.r && state.sent.r >= state.graf.cost) {
+        state.sent.r = state.sent.r - state.graf.cost;
         state.graf.r = state.graf.r + 1;
         state.graf.cost = 10 + state.graf.r*1.05;
 
-        document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
+        document.getElementById("sent_stock").innerHTML = state.sent.r.toFixed(precision);
         document.getElementById("graf_stock").innerHTML = state.graf.r.toFixed(precision);
         document.getElementById("graf_cost").innerHTML = state.graf.cost.toFixed(precision);
     }
@@ -259,6 +288,13 @@ function update_word(n){
     if(state.word.r > state.word.lim) {state.word.r = state.word.lim;}
     if(state.word.r > 0) {document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);}
     else {state.word.r = 0; document.getElementById("word_stock").innerHTML = '0';}
+};
+
+function update_sent(n){
+    state.sent.r = state.sent.r + n;
+    if(state.sent.r > state.sent.lim) {state.sent.r = state.sent.lim;}
+    if(state.sent.r > 0) {document.getElementById("sent_stock").innerHTML = state.sent.r.toFixed(precision);}
+    else {state.sent.r = 0; document.getElementById("sent_stock").innerHTML = '0';}
 };
 
 function update_graf(n){
