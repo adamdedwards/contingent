@@ -85,21 +85,21 @@
 <div id="write" style="width:18%; float:left;">
 <h3>Write</h3>
 <div><button id="word" onClick="inc_word()">write a word</button></div>
-<div id="sent" class="hidden"><button onClick="inc_sent()">compose a sentence</button><p class="cost">Cost: <span id="sent_cost"></span> words</p></div>
-<div id="graf" class="hidden"><button onClick="inc_graf()">write a paragraph</button><p class="cost">Cost: <span id="graf_cost"></span> sentences</p></div>
-<div id="draft" class="hidden"><button onClick="inc_draft()">write a draft</button><p class="cost">Cost: <span id="draft_cost"></span> words</p></div>
-<div id="chapter" class="hidden"><button onClick="inc_chapter()">write a chapter</button><p class="cost" >Cost: <span id="chapter_cost"></span> words</p></div>
-<div id="dissertation class="hidden"><button" onClick="inc_dissertation()">write a dissertation</button><p class="cost" >Cost: <span id="dissertation_cost"></span> words</p></div>
-<div id="monograph" class="hidden"><button onClick="inc_monograph()">write a monograph</button><p class="cost" >Cost: <span id="monograph_cost"></span> words</p></div>
+<div><div id="sent" class="hidden"><button onClick="inc_sent()">compose a sentence</button></div><p class="cost">Cost: <span id="sent_cost"></span> words</p></div>
+<div><div id="graf" class="hidden"><button onClick="inc_graf()">write a paragraph</button></div><p class="cost">Cost: <span id="graf_cost"></span> sentences</p></div>
+<div><div id="draft" class="hidden"><button onClick="inc_draft()">write a draft</button></div><p class="cost">Cost: <span id="draft_cost_g"></span> grafs<br><br><span id="draft_cost_t"></span> thoughts</p></div>
+<div><div id="chapter" class="hidden"><button onClick="inc_chapter()">write a chapter</button></div><p class="cost" >Cost: <span id="chapter_cost"></span> drafts</p></div>
+<div><div id="dissertation" class="hidden"><button onClick="inc_dissertation()">write a dissertation</button></div><p class="cost" >Cost: <span id="dissertation_cost"></span> chapters</p></div>
+<div><div id="monograph" class="hidden"><button onClick="inc_monograph()">write a monograph</button></div><p class="cost" >Cost: <span id="monograph_cost"></span> words</p></div>
 </div>
 
 <div id="research" style="width:18%; float:left;">
 <h3>Research</h3>
-<div><div id="article"><button onClick="add_article()">read an article</button><span class="stock" id="article_stock"></span></div><p class="cost">Keep up with the literature.<br><br>Increases word limit by 25.<br><br>Cost: <span id="article_cost"></span> words</p></div>
-<div><div id="book"><button onClick="add_book()">read a book</button><span class="stock" id="book_stock"></span></div><p class="cost">Like an article, but longer!<br><br>Increases word limit by 100.<br><br>Cost: <span id="book_cost"></span> words</p></div>
-<div><div id="anthology"><button onClick="add_anth()">read an anthology</button><span class="stock" id="anth_stock"></span></div><p class="cost">Someone just published a bunch of someone else's articles.<br><br>Increases word limit by 500.<br><br>Cost: <span id="anth_cost"></span> words</p></div>
-<div><div id="outline"><button onClick="add_outline()">outline a paper</button><span class="stock" id="outline_stock"></span></div><p class="cost">Make a plan.<br><br>Increases word &Delta;t by 0.1.<br><br>Cost: <span id="outline_cost"></span> words</p></div>
-<div><div id="seminar"><button onClick="add_seminar()">attend seminar</button><span class="stock" id="seminar_stock"></span></div><p class="cost">Go to class.<br><br>Increases thought limit by 5.<br><br>Cost: <span id="seminar_cost"></span> words</p></div>
+<div><div id="article"><button onClick="add_article()">read an article</button><span class="stock" id="article_stock"></span></div><p class="cost"><span class="tech_description">Keep up with the literature.</span><br><br>Increases word limit by 25.<br><br>Cost: <span id="article_cost"></span> words</p></div>
+<div><div id="book"><button onClick="add_book()">read a book</button><span class="stock" id="book_stock"></span></div><p class="cost"><span class="tech_description">Like an article, but longer!</span><br><br>Increases word limit by 100.<br><br>Cost: <span id="book_cost"></span> words</p></div>
+<div><div id="anthology"><button onClick="add_anth()">read an anthology</button><span class="stock" id="anth_stock"></span></div><p class="cost"><span class="tech_description">Someone just published a bunch of someone else's articles.</span><br><br>Increases word limit by 500.<br><br>Cost: <span id="anth_cost"></span> words</p></div>
+<div><div id="outline"><button onClick="add_outline()">outline a paper</button><span class="stock" id="outline_stock"></span></div><p class="cost"><span class="tech_description">Make a plan.</span><br><br>Increases word &Delta;t by 0.5.<br><br>Cost: <span id="outline_cost"></span> words</p></div>
+<div><div id="seminar"><button onClick="add_seminar()">attend seminar</button><span class="stock" id="seminar_stock"></span></div><p class="cost"><span class="tech_description">Go to class.</span><br><br>Increases thought limit by 5.<br><br>Cost: <span id="seminar_cost"></span> words</p></div>
 <div class="hidden"><div><button onClick="function()">syllabus</button><span class="stock" id="_stock"></span></div></div>
 <div class="hidden"><div><button onClick="function()">curriculum vitae</button><span class="stock" id="_stock"></span></div></div>
 <div class="hidden"><div><button onClick="function()">office hours</button><span class="stock" id="_stock"></span></div></div>
@@ -108,8 +108,8 @@
 
 <div id="upgrades" style="width:28%; float:left;">
 <h3>Upgrades</h3>
-<div><button id="sharper_pencils" onClick="sharper_pencils()">sharper pencils</button><p class="cost">Sharper pencils for sharper prose. <br>Increases word &Delta;t by 0.25.<br>Cost: <span id="sharper_pencils_cost"></span> words</p></div>
-<div><button id="word_processor" onClick="word_processor()">word processor</button><p class="cost">Heavily processed words from concentrate.<br>Increases word &Delta;t by 1.<br>Cost: <span id="word_processor_cost"></span> words</p></div>
+<div><button id="sharper_pencils" onClick="sharper_pencils()">sharper pencils</button><p class="cost">Sharper pencils for sharper prose. <br>Increases word &Delta;t by 2.<br>Cost: <span id="sharper_pencils_cost"></span> words</p></div>
+<div><button id="word_processor" onClick="word_processor()">word processor</button><p class="cost">Heavily processed words from concentrate.<br>Increases word &Delta;t by 8.<br>Cost: <span id="word_processor_cost"></span> words</p></div>
 
 <div class="hidden"><button id="period" onClick="period()">period</button><p class="cost">.<br><br>Cost: <span id="period_cost"></span> words</p></div>
 <div class="hidden"><button id="comma" onClick="comma()">comma</button><p class="cost">,<br><br>Cost: <span id="comma_cost"></span> words</p></div>
