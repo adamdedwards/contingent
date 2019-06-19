@@ -27,8 +27,7 @@ money :     {r: 1000.0, lim: 100000.0, dt: -0.0225, cost: 0.0, viz: false},
 tech :      {sharp: false, sharpcost: 10, process: false, processcost: 100},
 punct :     {period: {p:false, cost:100}, comma: {p:false, cost:500}, single_quote: {p:false, cost:1000},
              en_dash: {p:false, cost:5000}, semicolon: {p:false, cost:10000}, colon: {p:false, cost:50000},
-             double_quote: {p:false, cost:100000}, ellipsis: {p:false, cost:100}, scare_quote: {p:false, cost:500000},
-             guillemets: {p:false, cost:1000000}, block_quote: {p:false, cost:5000000}, weird_s: {p:false, cost:10000000}}
+             double_quote: {p:false, cost:100000}, ellipsis: {p:false, cost:500000}, em_dash: {p:false, cost:1000000}, scare_quote: {p:false, cost:5000000}, guillemets: {p:false, cost:10000000}, block_quote: {p:false, cost:50000000}, weird_s: {p:false, cost:100000000}}
 };
 
 function save() {
