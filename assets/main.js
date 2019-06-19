@@ -152,10 +152,10 @@ function update_costs(){
     document.getElementById("sharper_pencils_cost").innerHTML = state.tech.sharpcost.toFixed(precision);
     document.getElementById("word_processor_cost").innerHTML =  state.tech.processcost.toFixed(precision);
 
-    document.getElementById("period_cost").innerHTML =        state.tech.processcost.toFixed(precision);
-    document.getElementById("comma_cost").innerHTML =         state.tech.processcost.toFixed(precision);
-    document.getElementById("single_quote_cost").innerHTML =  state.tech.processcost.toFixed(precision);
-    document.getElementById("en_dash_cost").innerHTML =       state.tech.processcost.toFixed(precision);
+    document.getElementById("period_cost").innerHTML =        state.punct.period.cost.toFixed(precision);
+    document.getElementById("comma_cost").innerHTML =         state.punct.comma.cost.toFixed(precision);
+    document.getElementById("single_quote_cost").innerHTML =  state.punct.single_quote.cost.toFixed(precision);
+    document.getElementById("en_dash_cost").innerHTML =       state.punct.en_dash.cost.toFixed(precision);
 }
 
 function update_time(){
@@ -236,7 +236,7 @@ function inc_sent(n){
         state.word.r = state.word.r - state.sent.cost;
         state.sent.r = state.sent.r + n;
         state.sent.tot = state.sent.tot + n;
-        state.sent.cost = ((10 + state.sent.tot*0.85)*1.002 + state.sent.cost*0.0002)*(1-Number(state.punct.period.p)*0.05);
+        state.sent.cost = ((10 + state.sent.tot*0.85)*1.002 + state.sent.cost*0.0002)*(1.0-(Number(state.punct.period.p)*0.1));
 
         document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
         document.getElementById("sent_stock").innerHTML = state.sent.r.toFixed(precision);
