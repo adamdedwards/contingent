@@ -168,8 +168,8 @@ function update_time(){
 }
 
 function update_viz(){
-if(state.word.tot > 10) {document.getElementById("research").classList.toggle("hidden",false);}
-if(state.sent.tot >= 1) {document.getElementById("upgrades").classList.toggle("hidden",false);}
+if(state.word.tot > 10.0) {document.getElementById("research").classList.toggle("hidden",false);}
+if(state.sent.tot >= 1.0) {document.getElementById("upgrades").classList.toggle("hidden",false);}
 if(state.tech.sharp){document.getElementById("sharper_pencils").classList.add("hidden");}
 if(state.tech.process){document.getElementById("word_processor").classList.add("hidden");}
 if(state.sent.viz){document.getElementById("sent_label").classList.toggle("hidden",false);
