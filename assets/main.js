@@ -30,7 +30,7 @@ tech :      {sharp: false, sharpcost: 10, process: false, processcost: 10}
 function save() {
   localStorage.setItem('time', JSON.stringify(time));
   localStorage.setItem('state', JSON.stringify(state));
-  document.getElementById("alerttext").innerHTML = "Game saved!";
+  document.getElementById("alert").insertAdjacentHTML('afterbegin', "<p>Game saved!</p>");
 }
 
 function load() {
@@ -134,20 +134,20 @@ function update_flows(){
 }
 
 function update_costs(){
-    document.getElementById("sent_cost").innerHTML =         state.sent.cost.toFixed(precision);
-    document.getElementById("graf_cost").innerHTML =         state.graf.cost.toFixed(precision);
-    document.getElementById("draft_cost_g").innerHTML =      state.draft.cost.g.toFixed(precision);
-    document.getElementById("draft_cost_t").innerHTML =      state.draft.cost.t.toFixed(precision);
-    document.getElementById("chapter_cost").innerHTML =      state.chapter.cost.toFixed(precision);
-    document.getElementById("dissertation_cost").innerHTML = state.diss.cost.toFixed(precision);
-    document.getElementById("monograph_cost").innerHTML =    state.monograph.cost.toFixed(precision);
-    document.getElementById("article_cost").innerHTML =      state.article.cost.toFixed(precision);
-    document.getElementById("book_cost").innerHTML =         state.book.cost.toFixed(precision);
-    document.getElementById("anth_cost").innerHTML =         state.anth.cost.toFixed(precision);
-    document.getElementById("outline_cost").innerHTML =      state.outline.cost.toFixed(precision);
-    document.getElementById("seminar_cost").innerHTML =      state.seminar.cost.toFixed(precision);
+    document.getElementById("sent_cost").innerHTML =            state.sent.cost.toFixed(precision);
+    document.getElementById("graf_cost").innerHTML =            state.graf.cost.toFixed(precision);
+    document.getElementById("draft_cost_g").innerHTML =         state.draft.cost.g.toFixed(precision);
+    document.getElementById("draft_cost_t").innerHTML =         state.draft.cost.t.toFixed(precision);
+    document.getElementById("chapter_cost").innerHTML =         state.chapter.cost.toFixed(precision);
+    document.getElementById("dissertation_cost").innerHTML =    state.diss.cost.toFixed(precision);
+    document.getElementById("monograph_cost").innerHTML =       state.monograph.cost.toFixed(precision);
+    document.getElementById("article_cost").innerHTML =         state.article.cost.toFixed(precision);
+    document.getElementById("book_cost").innerHTML =            state.book.cost.toFixed(precision);
+    document.getElementById("anth_cost").innerHTML =            state.anth.cost.toFixed(precision);
+    document.getElementById("outline_cost").innerHTML =         state.outline.cost.toFixed(precision);
+    document.getElementById("seminar_cost").innerHTML =         state.seminar.cost.toFixed(precision);
     document.getElementById("sharper_pencils_cost").innerHTML = state.tech.sharpcost.toFixed(precision);
-    document.getElementById("word_processor_cost").innerHTML = state.tech.processcost.toFixed(precision);
+    document.getElementById("word_processor_cost").innerHTML =  state.tech.processcost.toFixed(precision);
 }
 
 function update_time(){
@@ -159,15 +159,17 @@ function update_time(){
     if((semester % 2) == 0) {document.getElementById("semester").innerHTML = "fall";}
     else if((semester % 2) == 1) {document.getElementById("semester").innerHTML = "spring";}
 
-    if(time == 1) {
-        document.getElementById("alerttext").innerHTML = "You have 5 years of funding.";
-        document.getElementById("alert").classList.add("fade");
-    }
-    if((time % 80) == 0) {
-            save();
-}}
+    if(time == 1)      {document.getElementById("alert").insertAdjacentHTML('afterbegin', "<p>You have 5 years of funding.</p>");}
+    if(time == 80001)  {document.getElementById("alert").insertAdjacentHTML('afterbegin', "<p>You have 4 years of funding.</p>");}
+    if(time == 160001) {document.getElementById("alert").insertAdjacentHTML('afterbegin', "<p>You have 3 years of funding.</p>");}
+    if(time == 240001) {document.getElementById("alert").insertAdjacentHTML('afterbegin', "<p>You have 2 years of funding.</p>");}
+    if(time == 320001) {document.getElementById("alert").insertAdjacentHTML('afterbegin', "<p>You have 1 years of funding.</p>");}
+    if((time % 80) == 0) {save();}
+}
 
 function update_viz(){
+if(state.word.tot > 10) {document.getElementById("research").classList.toggle("hidden",false);}
+if(state.sent.tot >= 1) {document.getElementById("upgrades").classList.toggle("hidden",false);}
 if(state.tech.sharp){document.getElementById("sharper_pencils").classList.add("hidden");}
 if(state.tech.process){document.getElementById("word_processor").classList.add("hidden");}
 if(state.sent.viz){document.getElementById("sent_label").classList.toggle("hidden",false);

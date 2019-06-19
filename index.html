@@ -17,8 +17,7 @@
 <body class="darkmode" onLoad="init()">
 <div class="gamewrapper">
 <h1>Contingent ◇∼👨‍🏫</h1>
-
-<p id="alert"><span id="alerttext"></span></p>
+<div id="alert"><p></p></div>
 
 <div id="materials" style="width:280px; float:left;">
 <h3 style="padding-left:0px;">Resources</h3>
@@ -93,7 +92,7 @@
 <div><div id="monograph" class="hidden"><button onClick="inc_monograph()">write a monograph</button></div><p class="cost" >Cost: <span id="monograph_cost"></span> words</p></div>
 </div>
 
-<div id="research" style="width:18%; float:left;">
+<div id="research" class="hidden" style="width:18%; float:left;">
 <h3>Research</h3>
 <div><div id="article"><button onClick="add_article()">read an article</button><span class="stock" id="article_stock"></span></div><p class="cost"><span class="tech_description">Keep up with the literature.</span><br><br>Increases word limit by 25.<br><br>Cost: <span id="article_cost"></span> words</p></div>
 <div><div id="book"><button onClick="add_book()">read a book</button><span class="stock" id="book_stock"></span></div><p class="cost"><span class="tech_description">Like an article, but longer!</span><br><br>Increases word limit by 100.<br><br>Cost: <span id="book_cost"></span> words</p></div>
@@ -106,7 +105,7 @@
 
 </div>
 
-<div id="upgrades" style="width:28%; float:left;">
+<div id="upgrades" class="hidden" style="width:28%; float:left;">
 <h3>Upgrades</h3>
 <div><button id="sharper_pencils" onClick="sharper_pencils()">sharper pencils</button><p class="cost">Sharper pencils for sharper prose. <br>Increases word &Delta;t by 2.<br>Cost: <span id="sharper_pencils_cost"></span> words</p></div>
 <div><button id="word_processor" onClick="word_processor()">word processor</button><p class="cost">Heavily processed words from concentrate.<br>Increases word &Delta;t by 8.<br>Cost: <span id="word_processor_cost"></span> words</p></div>
