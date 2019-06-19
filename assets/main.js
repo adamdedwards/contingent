@@ -201,6 +201,7 @@ if(state.diss.viz){document.getElementById("dissertation_label").classList.toggl
     document.getElementById("dissertation").classList.toggle("hidden",false);
     document.getElementById("dissertation_disp").classList.toggle("hidden",false);
     document.getElementById("dissertation_rate").classList.toggle("hidden",false);}
+if(state.sent.r >= 1.0) {document.getElementById("period").classList.toggle("hidden",false);}
 if(state.punct.period.p) {document.getElementById("comma").classList.toggle("hidden",false);}
 if(state.punct.comma.p) {document.getElementById("single_quote").classList.toggle("hidden",false);}
 if(state.punct.single_quote.p) {document.getElementById("en_dash").classList.toggle("hidden",false);}
