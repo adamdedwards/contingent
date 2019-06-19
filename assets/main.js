@@ -24,7 +24,11 @@ seminar :   {r: 0.0, lim: 0.0, dt: 0.0, tot: 0.0, cost: 200.0, viz: false},
 thought :   {r: 0.0, lim: 100.0, dt: 0.001, viz: false},
 anxiety :   {r: 0.0, lim: 100.0, dt: 0.00025, viz: false},
 money :     {r: 1000.0, lim: 100000.0, dt: -0.0225, cost: 0.0, viz: false},
-tech :      {sharp: false, sharpcost: 10, process: false, processcost: 10}
+tech :      {sharp: false, sharpcost: 10, process: false, processcost: 100},
+punct :     {period: {p:false, cost:100}, comma: {p:false, cost:500}, single_quote: {p:false, cost:1000},
+             en_dash: {p:false, cost:5000}, semicolon: {p:false, cost:10000}, colon: {p:false, cost:50000},
+             double_quote: {p:false, cost:100000}, ellipsis: {p:false, cost:100}, scare_quote: {p:false, cost:500000},
+             guillemets: {p:false, cost:1000000}, block_quote: {p:false, cost:5000000}, weird_s: {p:false, cost:10000000}}
 };
 
 function save() {
@@ -51,34 +55,34 @@ function init() {
     // STOCKS
     document.getElementById("time_stock").innerHTML = time;
 
-    document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
-    document.getElementById("sent_stock").innerHTML = state.sent.r.toFixed(precision);
-    document.getElementById("graf_stock").innerHTML = state.graf.r.toFixed(precision);
-    document.getElementById("draft_stock").innerHTML = state.draft.r.toFixed(precision);
-    document.getElementById("chapter_stock").innerHTML = state.chapter.r.toFixed(precision);
+    document.getElementById("word_stock").innerHTML =         state.word.r.toFixed(precision);
+    document.getElementById("sent_stock").innerHTML =         state.sent.r.toFixed(precision);
+    document.getElementById("graf_stock").innerHTML =         state.graf.r.toFixed(precision);
+    document.getElementById("draft_stock").innerHTML =        state.draft.r.toFixed(precision);
+    document.getElementById("chapter_stock").innerHTML =      state.chapter.r.toFixed(precision);
     document.getElementById("dissertation_stock").innerHTML = state.diss.r.toFixed(precision);
-    document.getElementById("monograph_stock").innerHTML = state.monograph.r.toFixed(precision);
-    document.getElementById("volume_stock").innerHTML = state.volume.r.toFixed(precision);
-    document.getElementById("thought_stock").innerHTML = state.thought.r.toFixed(precision);
+    document.getElementById("monograph_stock").innerHTML =    state.monograph.r.toFixed(precision);
+    document.getElementById("volume_stock").innerHTML =       state.volume.r.toFixed(precision);
+    document.getElementById("thought_stock").innerHTML =      state.thought.r.toFixed(precision);
 
-    document.getElementById("money_stock").innerHTML = state.money.r.toFixed(precision);
+    document.getElementById("money_stock").innerHTML =        state.money.r.toFixed(precision);
 
-    document.getElementById("seminar_stock").innerHTML = state.seminar.r.toFixed(0);
-    document.getElementById("outline_stock").innerHTML = state.outline.r.toFixed(0);
-    document.getElementById("article_stock").innerHTML = state.article.r.toFixed(0);
-    document.getElementById("book_stock").innerHTML = state.book.r.toFixed(0);
-    document.getElementById("anth_stock").innerHTML = state.anth.r.toFixed(0);
+    document.getElementById("seminar_stock").innerHTML =      state.seminar.r.toFixed(0);
+    document.getElementById("outline_stock").innerHTML =      state.outline.r.toFixed(0);
+    document.getElementById("article_stock").innerHTML =      state.article.r.toFixed(0);
+    document.getElementById("book_stock").innerHTML =         state.book.r.toFixed(0);
+    document.getElementById("anth_stock").innerHTML =         state.anth.r.toFixed(0);
 
     // LIMITS
-    document.getElementById("word_limit").innerHTML = state.word.lim;
-    document.getElementById("sent_limit").innerHTML = state.sent.lim;
-    document.getElementById("graf_limit").innerHTML = state.graf.lim;
-    document.getElementById("draft_limit").innerHTML = state.draft.lim;
-    document.getElementById("volume_limit").innerHTML = state.volume.lim;
-    document.getElementById("chapter_limit").innerHTML = state.chapter.lim;
+    document.getElementById("word_limit").innerHTML =         state.word.lim;
+    document.getElementById("sent_limit").innerHTML =         state.sent.lim;
+    document.getElementById("graf_limit").innerHTML =         state.graf.lim;
+    document.getElementById("draft_limit").innerHTML =        state.draft.lim;
+    document.getElementById("volume_limit").innerHTML =       state.volume.lim;
+    document.getElementById("chapter_limit").innerHTML =      state.chapter.lim;
     document.getElementById("dissertation_limit").innerHTML = state.diss.lim;
-    document.getElementById("monograph_limit").innerHTML = state.monograph.lim;
-    document.getElementById("thought_limit").innerHTML = state.thought.lim;
+    document.getElementById("monograph_limit").innerHTML =    state.monograph.lim;
+    document.getElementById("thought_limit").innerHTML =      state.thought.lim;
 };
 
 window.setInterval(function(){
@@ -148,6 +152,11 @@ function update_costs(){
     document.getElementById("seminar_cost").innerHTML =         state.seminar.cost.toFixed(precision);
     document.getElementById("sharper_pencils_cost").innerHTML = state.tech.sharpcost.toFixed(precision);
     document.getElementById("word_processor_cost").innerHTML =  state.tech.processcost.toFixed(precision);
+
+    document.getElementById("period_cost").innerHTML =        state.tech.processcost.toFixed(precision);
+    document.getElementById("comma_cost").innerHTML =         state.tech.processcost.toFixed(precision);
+    document.getElementById("single_quote_cost").innerHTML =  state.tech.processcost.toFixed(precision);
+    document.getElementById("en_dash_cost").innerHTML =       state.tech.processcost.toFixed(precision);
 }
 
 function update_time(){
@@ -164,7 +173,7 @@ function update_time(){
     if(time == 160001) {document.getElementById("alert").insertAdjacentHTML('afterbegin', "<p>You have 3 years of funding.</p>");}
     if(time == 240001) {document.getElementById("alert").insertAdjacentHTML('afterbegin', "<p>You have 2 years of funding.</p>");}
     if(time == 320001) {document.getElementById("alert").insertAdjacentHTML('afterbegin', "<p>You have 1 years of funding.</p>");}
-    if((time % 80) == 0) {save();}
+    if((time % 800) == 0) {save();}
 }
 
 function update_viz(){
@@ -173,25 +182,37 @@ if(state.sent.tot >= 1.0) {document.getElementById("upgrades").classList.toggle(
 if(state.tech.sharp){document.getElementById("sharper_pencils").classList.add("hidden");}
 if(state.tech.process){document.getElementById("word_processor").classList.add("hidden");}
 if(state.sent.viz){document.getElementById("sent_label").classList.toggle("hidden",false);
-document.getElementById("sent").classList.toggle("hidden",false);
-document.getElementById("sent_disp").classList.toggle("hidden",false);
-document.getElementById("sent_rate").classList.toggle("hidden",false);}
+    document.getElementById("sent").classList.toggle("hidden",false);
+    document.getElementById("sent_disp").classList.toggle("hidden",false);
+    document.getElementById("sent_rate").classList.toggle("hidden",false);}
 if(state.graf.viz){document.getElementById("graf_label").classList.toggle("hidden",false);
-document.getElementById("graf").classList.toggle("hidden",false);
-document.getElementById("graf_disp").classList.toggle("hidden",false);
-document.getElementById("graf_rate").classList.toggle("hidden",false);}
+    document.getElementById("graf").classList.toggle("hidden",false);
+    document.getElementById("graf_disp").classList.toggle("hidden",false);
+    document.getElementById("graf_rate").classList.toggle("hidden",false);}
 if(state.draft.viz){document.getElementById("draft_label").classList.toggle("hidden",false);
-document.getElementById("draft").classList.toggle("hidden",false);
-document.getElementById("draft_disp").classList.toggle("hidden",false);
-document.getElementById("draft_rate").classList.toggle("hidden",false);}
+    document.getElementById("draft").classList.toggle("hidden",false);
+    document.getElementById("draft_disp").classList.toggle("hidden",false);
+    document.getElementById("draft_rate").classList.toggle("hidden",false);}
 if(state.chapter.viz){document.getElementById("chapter_label").classList.toggle("hidden",false);
-document.getElementById("chapter").classList.toggle("hidden",false);
-document.getElementById("chapter_disp").classList.toggle("hidden",false);
-document.getElementById("chapter_rate").classList.toggle("hidden",false);}
+    document.getElementById("chapter").classList.toggle("hidden",false);
+    document.getElementById("chapter_disp").classList.toggle("hidden",false);
+    document.getElementById("chapter_rate").classList.toggle("hidden",false);}
 if(state.diss.viz){document.getElementById("dissertation_label").classList.toggle("hidden",false);
-document.getElementById("dissertation").classList.toggle("hidden",false);
-document.getElementById("dissertation_disp").classList.toggle("hidden",false);
-document.getElementById("dissertation_rate").classList.toggle("hidden",false);}
+    document.getElementById("dissertation").classList.toggle("hidden",false);
+    document.getElementById("dissertation_disp").classList.toggle("hidden",false);
+    document.getElementById("dissertation_rate").classList.toggle("hidden",false);}
+if(state.punct.period.p) {document.getElementById("comma").classList.toggle("hidden",false);}
+if(state.punct.comma.p) {document.getElementById("single_quote").classList.toggle("hidden",false);}
+if(state.punct.single_quote.p) {document.getElementById("en_dash").classList.toggle("hidden",false);}
+if(state.punct.en_dash.p) {document.getElementById("semicolon").classList.toggle("hidden",false);}
+if(state.punct.semicolon.p) {document.getElementById("colon").classList.toggle("hidden",false);}
+if(state.punct.colon.p) {document.getElementById("double_quote").classList.toggle("hidden",false);}
+if(state.punct.double_quote.p) {document.getElementById("ellipsis").classList.toggle("hidden",false);}
+if(state.punct.ellipsis.p) {document.getElementById("em_dash").classList.toggle("hidden",false);}
+if(state.punct.em_dash.p) {document.getElementById("scare_quote").classList.toggle("hidden",false);}
+if(state.punct.scare_quote.p) {document.getElementById("guillemets").classList.toggle("hidden",false);}
+if(state.punct.guillemets.p) {document.getElementById("block_quote").classList.toggle("hidden",false);}
+if(state.punct.block_quote.p) {document.getElementById("weird_s").classList.toggle("hidden",false);}
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -203,7 +224,7 @@ function inc_sent(n){
         state.word.r = state.word.r - state.sent.cost;
         state.sent.r = state.sent.r + n;
         state.sent.tot = state.sent.tot + n;
-        state.sent.cost = (10 + state.sent.tot*0.85)*1.002 + state.sent.cost*0.0002;
+        state.sent.cost = ((10 + state.sent.tot*0.85)*1.002 + state.sent.cost*0.0002)*(1-Number(state.punct.period.p)*0.05);
 
         document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
         document.getElementById("sent_stock").innerHTML = state.sent.r.toFixed(precision);
@@ -419,6 +440,10 @@ function update_thought(n){
     else {state.thought.r = 0; document.getElementById("thought_stock").innerHTML = '0';}
 };
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 function sharper_pencils() {
     if(state.word.r >= state.tech.sharpcost) {
@@ -432,8 +457,31 @@ function word_processor() {
     state.tech.process = true;}
 }
 
+function period() {
+    if(state.word.r >= state.punct.period.cost) {
+    state.word.r = state.word.r - state.punct.period.cost;
+    state.punct.period.p = true;}
+}
 
+function comma() {
+    if(state.word.r >= state.punct.comma.cost) {
+    state.word.r = state.word.r - state.punct.comma.cost;
+    state.punct.comma.p = true;}
+}
+
+function single_quote() {
+    if(state.word.r >= state.punct.single_quote.cost) {
+    state.word.r = state.word.r - state.punct.single_quote.cost;
+    state.punct.single_quote.p = true;}
+}
+
+function en_dash() {
+    if(state.word.r >= state.punct.en_dash.cost) {
+    state.word.r = state.word.r - state.punct.en_dash.cost;
+    state.punct.en_dash.p = true;}
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 function darkmode() {
     state.night = !state.night;
   $('.darkmode').toggleClass('darkmode-active');
