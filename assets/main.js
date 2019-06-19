@@ -202,18 +202,30 @@ if(state.diss.viz){document.getElementById("dissertation_label").classList.toggl
     document.getElementById("dissertation_disp").classList.toggle("hidden",false);
     document.getElementById("dissertation_rate").classList.toggle("hidden",false);}
 if(state.sent.r >= 1.0) {document.getElementById("period").classList.toggle("hidden",false);}
-if(state.punct.period.p) {document.getElementById("comma").classList.toggle("hidden",false);}
-if(state.punct.comma.p) {document.getElementById("single_quote").classList.toggle("hidden",false);}
-if(state.punct.single_quote.p) {document.getElementById("en_dash").classList.toggle("hidden",false);}
-if(state.punct.en_dash.p) {document.getElementById("semicolon").classList.toggle("hidden",false);}
-if(state.punct.semicolon.p) {document.getElementById("colon").classList.toggle("hidden",false);}
-if(state.punct.colon.p) {document.getElementById("double_quote").classList.toggle("hidden",false);}
-if(state.punct.double_quote.p) {document.getElementById("ellipsis").classList.toggle("hidden",false);}
-if(state.punct.ellipsis.p) {document.getElementById("em_dash").classList.toggle("hidden",false);}
-if(state.punct.em_dash.p) {document.getElementById("scare_quote").classList.toggle("hidden",false);}
-if(state.punct.scare_quote.p) {document.getElementById("guillemets").classList.toggle("hidden",false);}
-if(state.punct.guillemets.p) {document.getElementById("block_quote").classList.toggle("hidden",false);}
-if(state.punct.block_quote.p) {document.getElementById("weird_s").classList.toggle("hidden",false);}
+if(state.punct.period.p) {document.getElementById("period").classList.add("hidden");
+document.getElementById("comma").classList.toggle("hidden",false);}
+if(state.punct.comma.p) {document.getElementById("comma").classList.add("hidden");
+document.getElementById("single_quote").classList.toggle("hidden",false);}
+if(state.punct.single_quote.p) {document.getElementById("single_quote").classList.add("hidden");
+document.getElementById("en_dash").classList.toggle("hidden",false);}
+if(state.punct.en_dash.p) {document.getElementById("en_dash").classList.add("hidden");
+document.getElementById("semicolon").classList.toggle("hidden",false);}
+if(state.punct.semicolon.p) {document.getElementById("semicolon").classList.add("hidden");
+document.getElementById("colon").classList.toggle("hidden",false);}
+if(state.punct.colon.p) {document.getElementById("colon").classList.add("hidden");
+document.getElementById("double_quote").classList.toggle("hidden",false);}
+if(state.punct.double_quote.p) {document.getElementById("double_quote").classList.add("hidden");
+document.getElementById("ellipsis").classList.toggle("hidden",false);}
+if(state.punct.ellipsis.p) {document.getElementById("ellipsis").classList.add("hidden");
+document.getElementById("em_dash").classList.toggle("hidden",false);}
+if(state.punct.em_dash.p) {document.getElementById("em_dash").classList.add("hidden");
+document.getElementById("scare_quote").classList.toggle("hidden",false);}
+if(state.punct.scare_quote.p) {document.getElementById("scare_quote").classList.add("hidden");
+document.getElementById("guillemets").classList.toggle("hidden",false);}
+if(state.punct.guillemets.p) {document.getElementById("guillemets").classList.add("hidden");
+document.getElementById("block_quote").classList.toggle("hidden",false);}
+if(state.punct.block_quote.p) {document.getElementById("block_quote").classList.add("hidden");
+document.getElementById("weird_s").classList.toggle("hidden",false);}
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
