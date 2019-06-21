@@ -234,9 +234,9 @@ function inc_sent(n){
     n = 1;
     if(state.sent.lim > state.sent.r && state.word.r >= state.sent.cost) {
         state.word.r = state.word.r - state.sent.cost;
-        state.sent.r = state.sent.r + n;
-        state.sent.tot = state.sent.tot + n;
-        state.sent.cost = ((10 + state.sent.tot*0.85)*1.002 + state.sent.cost*0.0002)*(1.0-(Number(state.punct.period.p)*0.1));
+        state.sent.r = state.sent.r + n*(1.0-(Number(state.punct.period.p)*1.1))*(1.0-(Number(state.punct.comma.p)*1.25));
+        state.sent.tot = state.sent.tot + n*(1.0-(Number(state.punct.period.p)*1.1))*(1.0-(Number(state.punct.comma.p)*1.25));
+        state.sent.cost = ((10 + state.sent.tot*0.85)*1.002 + state.sent.cost*0.0002)*(1.0-(Number(state.punct.period.p)*0.1))*(1.0-(Number(state.punct.comma.p)*0.25));
 
         document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
         document.getElementById("sent_stock").innerHTML = state.sent.r.toFixed(precision);
@@ -457,17 +457,15 @@ function update_thought(n){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-function sharper_pencils() {
-    if(state.word.r >= state.tech.sharpcost) {
+function sharper_pencils() {if(state.word.r >= state.tech.sharpcost) {
     state.word.r = state.word.r - state.tech.sharpcost;
-    state.tech.sharp = true;}
-}
+    state.tech.sharp = true;
+}}
 
-function word_processor() {
-    if(state.word.r >= state.tech.processcost) {
+function word_processor() {if(state.word.r >= state.tech.processcost) {
     state.word.r = state.word.r - state.tech.processcost;
-    state.tech.process = true;}
-}
+    state.tech.process = true;
+}}
 
 function period() {
     if(state.word.r >= state.punct.period.cost) {
