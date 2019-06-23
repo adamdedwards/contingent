@@ -24,7 +24,7 @@ seminar :   {r: 0.0, lim: 0.0, dt: 0.0, tot: 0.0, cost: 200.0, viz: false},
 thought :   {r: 0.0, lim: 100.0, dt: 0.001, viz: false},
 anxiety :   {r: 0.0, lim: 100.0, dt: 0.00025, viz: false},
 money :     {r: 1000.0, lim: 100000.0, dt: -0.0225, cost: 0.0, viz: false},
-tech :      {sharp: false, sharpcost: 10, process: false, processcost: 100},
+tech :      {sharp: false, sharpcost: 10, process: false, processcost: 100, punctuation: {p:false , cost:20}},
 punct :     {period: {p:false, cost:100}, comma: {p:false, cost:500}, single_quote: {p:false, cost:1000},
              en_dash: {p:false, cost:5000}, semicolon: {p:false, cost:10000}, colon: {p:false, cost:50000},
              double_quote: {p:false, cost:100000}, ellipsis: {p:false, cost:500000}, em_dash: {p:false, cost:1000000}, scare_quote: {p:false, cost:5000000}, guillemets: {p:false, cost:10000000}, block_quote: {p:false, cost:50000000}, weird_s: {p:false, cost:100000000}}
@@ -104,7 +104,7 @@ window.setInterval(function(){
 
 function update_flows(){
     if(state.money.r > 0.0 && state.anxiety.r < 8.0) {
-        state.word.dt =         0.0 + state.outline.r*0.00625 + Number(state.tech.sharp)*0.25 + Number(state.tech.process)*1.0;
+        state.word.dt =         0.0 + state.outline.r*0.00625 + Number(state.tech.sharp)*0.13 + Number(state.tech.process)*0.6;
         state.sent.dt =         0.0;
         state.graf.dt =         0.0;
         state.draft.dt =        0.0;
@@ -137,6 +137,19 @@ function update_flows(){
 }
 
 function update_costs(){
+
+    state.sent.cost    = (10 * Math.pow(1.05,state.sent.tot))*(1.0-(Number(state.punct.period.p)*0.1))*(1.0-(Number(state.punct.comma.p)*0.25));
+    state.graf.cost    = 10 * Math.pow(1.01,state.graf.tot);
+    state.draft.cost.g = 40 + state.draft.tot*1.02;
+    state.draft.cost.t = 1 + state.draft.tot;
+    state.chapter.cost = 10 + state.chapter.tot*1.02;
+    state.diss.cost    = 8 + state.diss.tot*1.02;
+    state.outline.cost = 25 * Math.pow(1.05,state.outline.r);
+    state.article.cost = 10 * Math.pow(1.05,state.article.r);
+    state.book.cost    = 100 * Math.pow(1.1,state.book.r);
+    state.anth.cost    = 1000 + state.anth.r*1.1;
+    state.seminar.cost = 200 + state.seminar.r*1.05;
+
     document.getElementById("sent_cost").innerHTML =            state.sent.cost.toFixed(precision);
     document.getElementById("graf_cost").innerHTML =            state.graf.cost.toFixed(precision);
     document.getElementById("draft_cost_g").innerHTML =         state.draft.cost.g.toFixed(precision);
@@ -151,11 +164,12 @@ function update_costs(){
     document.getElementById("seminar_cost").innerHTML =         state.seminar.cost.toFixed(precision);
     document.getElementById("sharper_pencils_cost").innerHTML = state.tech.sharpcost.toFixed(precision);
     document.getElementById("word_processor_cost").innerHTML =  state.tech.processcost.toFixed(precision);
+    document.getElementById("punctuation_cost").innerHTML =  state.tech.punctuation.cost.toFixed(precision);
 
-    document.getElementById("period_cost").innerHTML =        state.punct.period.cost.toFixed(precision);
-    document.getElementById("comma_cost").innerHTML =         state.punct.comma.cost.toFixed(precision);
-    document.getElementById("single_quote_cost").innerHTML =  state.punct.single_quote.cost.toFixed(precision);
-    document.getElementById("en_dash_cost").innerHTML =       state.punct.en_dash.cost.toFixed(precision);
+    document.getElementById("period_cost").innerHTML =          state.punct.period.cost.toFixed(precision);
+    document.getElementById("comma_cost").innerHTML =           state.punct.comma.cost.toFixed(precision);
+    document.getElementById("single_quote_cost").innerHTML =    state.punct.single_quote.cost.toFixed(precision);
+    document.getElementById("en_dash_cost").innerHTML =         state.punct.en_dash.cost.toFixed(precision);
 }
 
 function update_time(){
@@ -176,10 +190,11 @@ function update_time(){
 }
 
 function update_viz(){
-if(state.word.tot > 10.0) {document.getElementById("research").classList.toggle("hidden",false);}
-if(state.sent.tot >= 1.0) {document.getElementById("upgrades").classList.toggle("hidden",false);}
+if(state.word.tot >= 50.0) {document.getElementById("research").classList.toggle("hidden",false);}
+if(state.word.tot >= 10.0) {document.getElementById("upgrades").classList.toggle("hidden",false);}
 if(state.tech.sharp){document.getElementById("sharper_pencils").classList.add("hidden");}
 if(state.tech.process){document.getElementById("word_processor").classList.add("hidden");}
+if(state.tech.punctuation.p){document.getElementById("punctuation").classList.add("hidden");}
 if(state.sent.viz){document.getElementById("sent_label").classList.toggle("hidden",false);
     document.getElementById("sent").classList.toggle("hidden",false);
     document.getElementById("sent_disp").classList.toggle("hidden",false);
@@ -236,7 +251,6 @@ function inc_sent(n){
         state.word.r = state.word.r - state.sent.cost;
         state.sent.r = state.sent.r + n*(1.0-(Number(state.punct.period.p)*1.1))*(1.0-(Number(state.punct.comma.p)*1.25));
         state.sent.tot = state.sent.tot + n*(1.0-(Number(state.punct.period.p)*1.1))*(1.0-(Number(state.punct.comma.p)*1.25));
-        state.sent.cost = ((10 + state.sent.tot*0.85)*1.002 + state.sent.cost*0.0002)*(1.0-(Number(state.punct.period.p)*0.1))*(1.0-(Number(state.punct.comma.p)*0.25));
 
         document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
         document.getElementById("sent_stock").innerHTML = state.sent.r.toFixed(precision);
@@ -250,7 +264,6 @@ function inc_graf(){
         state.sent.r = state.sent.r - state.graf.cost;
         state.graf.r = state.graf.r + 1;
         state.graf.tot = state.graf.tot + 1;
-        state.graf.cost = 10 + state.graf.tot*1.01;
 
         document.getElementById("sent_stock").innerHTML = state.sent.r.toFixed(precision);
         document.getElementById("graf_stock").innerHTML = state.graf.r.toFixed(precision);
@@ -264,8 +277,6 @@ function inc_draft(n){
         state.thought.r = state.thought.r - state.draft.cost.t;
         state.draft.r = state.draft.r + 1;
         state.draft.tot = state.draft.tot + 1;
-        state.draft.cost.g = 40 + state.draft.tot*1.02;
-        state.draft.cost.t = 1 + state.draft.tot;
 
         document.getElementById("graf_stock").innerHTML = state.graf.r.toFixed(precision);
         document.getElementById("draft_stock").innerHTML = state.draft.r.toFixed(precision);
@@ -279,7 +290,6 @@ function inc_chapter(n){
         state.draft.r = state.draft.r - state.chapter.cost;
         state.chapter.r = state.chapter.r + 1;
         state.chapter.tot = state.chapter.tot + 1;
-        state.chapter.cost = 10 + state.chapter.tot*1.02;
 
         document.getElementById("draft_stock").innerHTML = state.draft.r.toFixed(precision);
         document.getElementById("chapter_stock").innerHTML = state.chapter.r.toFixed(precision);
@@ -292,7 +302,6 @@ function inc_dissertation(n){
         state.chapter.r = state.chapter.r - state.diss.cost;
         state.diss.r = state.diss.r + 1;
         state.diss.tot = state.diss.tot + 1;
-        state.diss.cost = 8 + state.diss.tot*1.02;
 
         document.getElementById("chapter_stock").innerHTML = state.chapter.r.toFixed(precision);
         document.getElementById("diss_stock").innerHTML = state.diss.r.toFixed(precision);
@@ -305,7 +314,6 @@ function add_outline(){
         state.outline.r++;
         state.word.r = state.word.r - state.outline.cost;
         state.word.lim = state.word.lim + 10;
-        state.outline.cost = state.outline.cost + state.outline.r*1.05;
 
         document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
         document.getElementById("word_limit").innerHTML = state.word.lim.toFixed(precision);        document.getElementById("outline_stock").innerHTML = state.outline.r.toFixed(0);
@@ -318,7 +326,6 @@ function add_article(){
         state.article.r++;
         state.word.r = state.word.r - state.article.cost;
         state.word.lim = state.word.lim + 25;
-        state.article.cost = (state.article.cost + state.article.r)*1.05;
 
         document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
         document.getElementById("word_limit").innerHTML = state.word.lim.toFixed(precision);        document.getElementById("article_stock").innerHTML = state.article.r.toFixed(0);
@@ -331,7 +338,6 @@ function add_book(){
         state.book.r++;
         state.word.r = state.word.r - state.book.cost;
         state.word.lim = state.word.lim + 100;
-        state.book.cost = (state.book.cost + state.book.r)*1.1;
 
         document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
         document.getElementById("word_limit").innerHTML = state.word.lim.toFixed(precision);        document.getElementById("book_stock").innerHTML = state.book.r.toFixed(0);
@@ -344,7 +350,6 @@ function add_anth(){
         state.anth.r++;
         state.word.r = state.word.r - state.anth.cost;
         state.word.lim = state.word.lim + 500;
-        state.anth.cost = (state.anth.cost + state.anth.r)*1.1;
 
         document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
         document.getElementById("word_limit").innerHTML = state.word.lim.toFixed(precision);        document.getElementById("anth_stock").innerHTML = state.anth.r.toFixed(0);
@@ -357,7 +362,6 @@ function add_seminar(){
         state.seminar.r++;
         state.word.r = state.word.r - state.seminar.cost;
         state.thought.lim = state.thought.lim + 5;
-        state.seminar.cost = (state.seminar.cost + state.seminar.r)*1.05;
 
         document.getElementById("word_stock").innerHTML = state.word.r.toFixed(precision);
         document.getElementById("thought_limit").innerHTML = state.thought.lim.toFixed(precision);        document.getElementById("seminar_stock").innerHTML = state.seminar.r.toFixed(0);
@@ -384,7 +388,7 @@ function update_sent(n){
     if(state.sent.r > state.sent.lim) {state.sent.r = state.sent.lim;}
     if(state.sent.r > 0) {document.getElementById("sent_stock").innerHTML = state.sent.r.toFixed(precision);}
     else {state.sent.r = 0; document.getElementById("sent_stock").innerHTML = '0';}
-    if(state.word.r >= 10.0) {state.sent.viz = true;}
+    if(state.tech.punctuation.p) {state.sent.viz = true;}
 };
 
 function update_graf(n){
@@ -465,6 +469,11 @@ function sharper_pencils() {if(state.word.r >= state.tech.sharpcost) {
 function word_processor() {if(state.word.r >= state.tech.processcost) {
     state.word.r = state.word.r - state.tech.processcost;
     state.tech.process = true;
+}}
+
+function punctuation() {if(state.word.r >= state.tech.punctuation.cost) {
+    state.word.r = state.word.r - state.tech.punctuation.cost;
+    state.tech.punctuation.p = true;
 }}
 
 function period() {
