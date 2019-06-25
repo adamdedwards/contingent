@@ -39,7 +39,6 @@ function init() {
     load();
     if(state.night) {darkmode();}
     run_game();
-    update_viz();
 };
 
 function save() {
