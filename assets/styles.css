@@ -1,9 +1,17 @@
-html, body {margin-left: 16px; margin-top:16px; height: 100%; background-color: #F0F0F0;}
+html, body {
+    margin-left: 16px;
+    margin-top:16px;
+    height: 100%;
+    background-color: #f0f0f0;
+    color: #000000;
+    font-family:'Inconsolata', monospace;
+    font-style:normal;
+    font-variant:normal;}
 
-h1 {font-family:'Inconsolata', monospace; font-size:36px; font-style:normal; font-variant:normal; font-weight:700; line-height:41px;}
-h2 {font-family:'Inconsolata', monospace; font-size:30px; font-style:normal; font-variant:normal; font-weight:700; line-height:35px;}
-h3 {font-family:'Inconsolata', monospace; font-size:27px; font-style:normal; font-variant:normal; font-weight:700; line-height:32px;  padding-left:15px;}
-p {font-family:'Inconsolata', monospace; font-size:18px; font-style:normal; font-variant:normal; font-weight:400; line-height:1.2em;}
+h1 {font-family:'Inconsolata', monospace; font-size:36px; font-weight:700; line-height:41px;}
+h2 {font-family:'Inconsolata', monospace; font-size:30px; font-weight:700; line-height:35px;}
+h3 {font-family:'Inconsolata', monospace; font-size:27px; font-weight:700; line-height:32px;  padding-left:15px;}
+p  {font-family:'Inconsolata', monospace; font-size:18px; font-weight:400; line-height:1.2em;}
 
 a:link    {color: slateblue;  text-decoration: none;}
 a:visited {color: slateblue; text-decoration: none;}

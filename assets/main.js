@@ -1,31 +1,33 @@
+// GAME CONSTANTS
 var tick = 125;
 var precision = 2;
 
 // RESOURCES
-var time = 0.0;
+var time =     0.0;
 var semester = 0.0;
-var anxiety = 0.0;
+var anxiety =  0.0;
 
 var state = {
-night :     false,
-word :      {r: 0.0, lim: 100.0, dt: 0.0, tot: 0.0},
-sent :      {r: 0.0, lim: 40.0, dt: 0.0, tot: 0.0, cost: 10.0, viz: false},
-graf :      {r: 0.0, lim: 40.0, dt: 0.0, tot: 0.0, cost: 10.0, viz: false},
-draft :     {r: 0.0, lim: 10.0, dt: 0.0, tot: 0.0, cost: {g:10.0,t:1}, viz: false},
-chapter :   {r: 0.0, lim: 10.0, dt: 0.0, tot: 0.0, cost: 10.0, viz: false},
-diss :      {r: 0.0, lim: 1.0, dt: 0.0, tot: 0.0, cost: 8.0, viz: false},
-monograph : {r: 0.0, lim: 1.0, dt: 0.0, tot: 0.0, cost: 40000.0, viz: false},
-volume :    {r: 0.0, lim: 10.0, dt: 0.0, tot: 0.0, cost: 160000.0, viz: false},
-article :   {r: 0.0, lim: 0.0, dt: 0.0, tot: 0.0, cost: 5.0, viz: false},
-book :      {r: 0.0, lim: 0.0, dt: 0.0, tot: 0.0, cost: 100.0, viz: false},
-anth :      {r: 0.0, lim: 0.0, dt: 0.0, tot: 0.0, cost: 1000.0, viz: false},
-outline :   {r: 0.0, lim: 0.0, dt: 0.0, tot: 0.0, cost: 10.0, viz: false},
-seminar :   {r: 0.0, lim: 0.0, dt: 0.0, tot: 0.0, cost: 200.0, viz: false},
-thought :   {r: 0.0, lim: 100.0, dt: 0.001, viz: false},
-anxiety :   {r: 0.0, lim: 100.0, dt: 0.00025, viz: false},
-money :     {r: 1000.0, lim: 100000.0, dt: -0.0225, cost: 0.0, viz: false},
-tech :      {sharp: false, sharpcost: 10, process: false, processcost: 100, punctuation: {p:false , cost:20}},
-punct :     {period: {p:false, cost:100}, comma: {p:false, cost:500}, single_quote: {p:false, cost:1000},
+night:      false,
+word:       {r: 0.0, lim: 100.0, dt: 0.0, tot: 0.0},
+sent:       {r: 0.0, lim: 40.0, dt: 0.0, tot: 0.0, cost: 10.0, viz: false},
+graf:       {r: 0.0, lim: 40.0, dt: 0.0, tot: 0.0, cost: 10.0, viz: false},
+draft:      {r: 0.0, lim: 10.0, dt: 0.0, tot: 0.0, cost: {g:10.0,t:1}, viz: false},
+chapter:    {r: 0.0, lim: 10.0, dt: 0.0, tot: 0.0, cost: 10.0, viz: false},
+diss:       {r: 0.0, lim: 5.0, dt: 0.0, tot: 0.0, cost: 8.0, viz: false},
+monograph:  {r: 0.0, lim: 5.0, dt: 0.0, tot: 0.0, cost: 2.0, viz: false},
+volume:     {r: 0.0, lim: 5.0, dt: 0.0, tot: 0.0, cost: 2.0, viz: false},
+references: {r: 0.0, lim: 0.0, dt: 0.0, tot: 0.0, cost: 0.0, viz: false},
+article:    {r: 0.0, lim: 0.0, dt: 0.0, tot: 0.0, cost: 5.0, viz: false},
+book:       {r: 0.0, lim: 0.0, dt: 0.0, tot: 0.0, cost: 100.0, viz: false},
+anth:       {r: 0.0, lim: 0.0, dt: 0.0, tot: 0.0, cost: 1000.0, viz: false},
+outline:    {r: 0.0, lim: 0.0, dt: 0.0, tot: 0.0, cost: 10.0, viz: false},
+seminar:    {r: 0.0, lim: 0.0, dt: 0.0, tot: 0.0, cost: 200.0, viz: false},
+thought:    {r: 0.0, lim: 100.0, dt: 0.001, viz: false},
+anxiety:    {r: 0.0, lim: 100.0, dt: 0.00025, viz: false},
+money:      {r: 1000.0, lim: 100000.0, dt: -0.0225, cost: 0.0, viz: false},
+tech:       {sharp: {p:false, cost: 10}, process: {p: false, cost: 100}, punctuation: {p:false , cost:20}},
+punct:      {period: {p:false, cost:100}, comma: {p:false, cost:500}, single_quote: {p:false, cost:1000},
              en_dash: {p:false, cost:5000}, semicolon: {p:false, cost:10000}, colon: {p:false, cost:50000},
              double_quote: {p:false, cost:100000}, ellipsis: {p:false, cost:500000}, em_dash: {p:false, cost:1000000}, scare_quote: {p:false, cost:5000000}, guillemets: {p:false, cost:10000000}, block_quote: {p:false, cost:50000000}, weird_s: {p:false, cost:100000000}}
 };
@@ -33,7 +35,7 @@ punct :     {period: {p:false, cost:100}, comma: {p:false, cost:500}, single_quo
 function save() {
   localStorage.setItem('time', JSON.stringify(time));
   localStorage.setItem('state', JSON.stringify(state));
-  document.getElementById("alert").insertAdjacentHTML('afterbegin', "<p>Game saved!</p>");
+  document.getElementById("alert").insertAdjacentHTML('afterbegin', "<p class=\"alert\">Game saved!</p>");
 }
 
 function load() {
@@ -104,24 +106,24 @@ window.setInterval(function(){
 
 function update_flows(){
     if(state.money.r > 0.0 && state.anxiety.r < 8.0) {
-        state.word.dt =         0.0 + state.outline.r*0.00625 + Number(state.tech.sharp)*0.13 + Number(state.tech.process)*0.6;
-        state.sent.dt =         0.0;
-        state.graf.dt =         0.0;
-        state.draft.dt =        0.0;
-        state.chapter.dt =      0.0;
-        state.diss.dt =         0.0;
-        state.monograph.dt =    0.0;
-        state.volume.dt =       0.0;
+        state.word.dt =       0.0 + state.outline.r*0.00625 + Number(state.tech.sharp.p)*0.13 + Number(state.tech.process.p)*0.6;
+        state.sent.dt =       0.0;
+        state.graf.dt =       0.0;
+        state.draft.dt =      0.0;
+        state.chapter.dt =    0.0;
+        state.diss.dt =       0.0;
+        state.monograph.dt =  0.0;
+        state.volume.dt =     0.0;
     }
     else {
-        state.word.dt =         0.0;
-        state.sent.dt =         0.0;
-        state.graf.dt =         0.0;
-        state.draft.dt =        0.0;
-        state.chapter.dt =      0.0;
-        state.diss.dt =         0.0;
-        state.monograph.dt =    0.0;
-        state.volume.dt =       0.0;
+        state.word.dt =       0.0;
+        state.sent.dt =       0.0;
+        state.graf.dt =       0.0;
+        state.draft.dt =      0.0;
+        state.chapter.dt =    0.0;
+        state.diss.dt =       0.0;
+        state.monograph.dt =  0.0;
+        state.volume.dt =     0.0;
     }
 
     document.getElementById("word_dt").innerHTML =         (state.word.dt*8).toFixed(precision);
@@ -139,16 +141,16 @@ function update_flows(){
 function update_costs(){
 
     state.sent.cost    = (10 * Math.pow(1.05,state.sent.tot))*(1.0-(Number(state.punct.period.p)*0.1))*(1.0-(Number(state.punct.comma.p)*0.25));
-    state.graf.cost    = 10 * Math.pow(1.01,state.graf.tot);
-    state.draft.cost.g = 40 + state.draft.tot*1.02;
-    state.draft.cost.t = 1 + state.draft.tot;
-    state.chapter.cost = 10 + state.chapter.tot*1.02;
-    state.diss.cost    = 8 + state.diss.tot*1.02;
-    state.outline.cost = 25 * Math.pow(1.05,state.outline.r);
-    state.article.cost = 10 * Math.pow(1.05,state.article.r);
-    state.book.cost    = 100 * Math.pow(1.1,state.book.r);
-    state.anth.cost    = 1000 + state.anth.r*1.1;
-    state.seminar.cost = 200 + state.seminar.r*1.05;
+    state.graf.cost    = 10   * Math.pow(1.01,state.graf.tot);
+    state.draft.cost.g = 40   * Math.pow(1.02,state.draft.tot);
+    state.draft.cost.t = 1    * Math.pow(1.00,state.draft.tot);
+    state.chapter.cost = 10   * Math.pow(1.02,state.chapter.tot);
+    state.diss.cost    = 8    * Math.pow(1.02,state.diss.tot);
+    state.outline.cost = 25   * Math.pow(1.05,state.outline.r);
+    state.article.cost = 10   * Math.pow(1.05,state.article.r);
+    state.book.cost    = 100  * Math.pow(1.10,state.book.r);
+    state.anth.cost    = 1000 * Math.pow(1.10,state.anth.r);
+    state.seminar.cost = 200  * Math.pow(1.05,state.seminar.r);
 
     document.getElementById("sent_cost").innerHTML =            state.sent.cost.toFixed(precision);
     document.getElementById("graf_cost").innerHTML =            state.graf.cost.toFixed(precision);
@@ -162,9 +164,9 @@ function update_costs(){
     document.getElementById("anth_cost").innerHTML =            state.anth.cost.toFixed(precision);
     document.getElementById("outline_cost").innerHTML =         state.outline.cost.toFixed(precision);
     document.getElementById("seminar_cost").innerHTML =         state.seminar.cost.toFixed(precision);
-    document.getElementById("sharper_pencils_cost").innerHTML = state.tech.sharpcost.toFixed(precision);
-    document.getElementById("word_processor_cost").innerHTML =  state.tech.processcost.toFixed(precision);
-    document.getElementById("punctuation_cost").innerHTML =  state.tech.punctuation.cost.toFixed(precision);
+    document.getElementById("sharper_pencils_cost").innerHTML = state.tech.sharp.cost.toFixed(precision);
+    document.getElementById("word_processor_cost").innerHTML =  state.tech.process.cost.toFixed(precision);
+    document.getElementById("punctuation_cost").innerHTML =     state.tech.punctuation.cost.toFixed(precision);
 
     document.getElementById("period_cost").innerHTML =          state.punct.period.cost.toFixed(precision);
     document.getElementById("comma_cost").innerHTML =           state.punct.comma.cost.toFixed(precision);
@@ -190,56 +192,75 @@ function update_time(){
 }
 
 function update_viz(){
-if(state.word.tot >= 50.0) {document.getElementById("research").classList.toggle("hidden",false);}
-if(state.word.tot >= 10.0) {document.getElementById("upgrades").classList.toggle("hidden",false);}
-if(state.tech.sharp){document.getElementById("sharper_pencils").classList.add("hidden");}
-if(state.tech.process){document.getElementById("word_processor").classList.add("hidden");}
+if(state.word.tot >= 50.0)  {document.getElementById("research").classList.toggle("hidden",false);}
+if(state.word.tot >= 10.0)  {document.getElementById("upgrades").classList.toggle("hidden",false);}
+if(state.tech.sharp.p)      {document.getElementById("sharper_pencils").classList.add("hidden");}
+if(state.tech.process.p)    {document.getElementById("word_processor").classList.add("hidden");}
 if(state.tech.punctuation.p){document.getElementById("punctuation").classList.add("hidden");}
-if(state.sent.viz){document.getElementById("sent_label").classList.toggle("hidden",false);
+if(state.sent.tot >= 1.0)   {document.getElementById("period").classList.toggle("hidden",false);}
+
+if(state.sent.viz){
+    document.getElementById("sent_label").classList.toggle("hidden",false);
     document.getElementById("sent").classList.toggle("hidden",false);
     document.getElementById("sent_disp").classList.toggle("hidden",false);
     document.getElementById("sent_rate").classList.toggle("hidden",false);}
-if(state.graf.viz){document.getElementById("graf_label").classList.toggle("hidden",false);
+if(state.graf.viz){
+    document.getElementById("graf_label").classList.toggle("hidden",false);
     document.getElementById("graf").classList.toggle("hidden",false);
     document.getElementById("graf_disp").classList.toggle("hidden",false);
     document.getElementById("graf_rate").classList.toggle("hidden",false);}
-if(state.draft.viz){document.getElementById("draft_label").classList.toggle("hidden",false);
+if(state.draft.viz){
+    document.getElementById("draft_label").classList.toggle("hidden",false);
     document.getElementById("draft").classList.toggle("hidden",false);
     document.getElementById("draft_disp").classList.toggle("hidden",false);
     document.getElementById("draft_rate").classList.toggle("hidden",false);}
-if(state.chapter.viz){document.getElementById("chapter_label").classList.toggle("hidden",false);
+if(state.chapter.viz){
+    document.getElementById("chapter_label").classList.toggle("hidden",false);
     document.getElementById("chapter").classList.toggle("hidden",false);
     document.getElementById("chapter_disp").classList.toggle("hidden",false);
     document.getElementById("chapter_rate").classList.toggle("hidden",false);}
-if(state.diss.viz){document.getElementById("dissertation_label").classList.toggle("hidden",false);
+if(state.diss.viz){
+    document.getElementById("dissertation_label").classList.toggle("hidden",false);
     document.getElementById("dissertation").classList.toggle("hidden",false);
     document.getElementById("dissertation_disp").classList.toggle("hidden",false);
     document.getElementById("dissertation_rate").classList.toggle("hidden",false);}
-if(state.sent.r >= 1.0) {document.getElementById("period").classList.toggle("hidden",false);}
-if(state.punct.period.p) {document.getElementById("period").classList.add("hidden");
-document.getElementById("comma").classList.toggle("hidden",false);}
-if(state.punct.comma.p) {document.getElementById("comma").classList.add("hidden");
-document.getElementById("single_quote").classList.toggle("hidden",false);}
-if(state.punct.single_quote.p) {document.getElementById("single_quote").classList.add("hidden");
-document.getElementById("en_dash").classList.toggle("hidden",false);}
-if(state.punct.en_dash.p) {document.getElementById("en_dash").classList.add("hidden");
-document.getElementById("semicolon").classList.toggle("hidden",false);}
-if(state.punct.semicolon.p) {document.getElementById("semicolon").classList.add("hidden");
-document.getElementById("colon").classList.toggle("hidden",false);}
-if(state.punct.colon.p) {document.getElementById("colon").classList.add("hidden");
-document.getElementById("double_quote").classList.toggle("hidden",false);}
-if(state.punct.double_quote.p) {document.getElementById("double_quote").classList.add("hidden");
-document.getElementById("ellipsis").classList.toggle("hidden",false);}
-if(state.punct.ellipsis.p) {document.getElementById("ellipsis").classList.add("hidden");
-document.getElementById("em_dash").classList.toggle("hidden",false);}
-if(state.punct.em_dash.p) {document.getElementById("em_dash").classList.add("hidden");
-document.getElementById("scare_quote").classList.toggle("hidden",false);}
-if(state.punct.scare_quote.p) {document.getElementById("scare_quote").classList.add("hidden");
-document.getElementById("guillemets").classList.toggle("hidden",false);}
-if(state.punct.guillemets.p) {document.getElementById("guillemets").classList.add("hidden");
-document.getElementById("block_quote").classList.toggle("hidden",false);}
-if(state.punct.block_quote.p) {document.getElementById("block_quote").classList.add("hidden");
-document.getElementById("weird_s").classList.toggle("hidden",false);}
+
+if(state.punct.period.p) {
+    document.getElementById("period").classList.add("hidden");
+    document.getElementById("comma").classList.toggle("hidden",false);}
+if(state.punct.comma.p) {
+    document.getElementById("comma").classList.add("hidden");
+    document.getElementById("single_quote").classList.toggle("hidden",false);}
+if(state.punct.single_quote.p) {
+    document.getElementById("single_quote").classList.add("hidden");
+    document.getElementById("en_dash").classList.toggle("hidden",false);}
+if(state.punct.en_dash.p) {
+    document.getElementById("en_dash").classList.add("hidden");
+    document.getElementById("semicolon").classList.toggle("hidden",false);}
+if(state.punct.semicolon.p) {
+    document.getElementById("semicolon").classList.add("hidden");
+    document.getElementById("colon").classList.toggle("hidden",false);}
+if(state.punct.colon.p) {
+    document.getElementById("colon").classList.add("hidden");
+    document.getElementById("double_quote").classList.toggle("hidden",false);}
+if(state.punct.double_quote.p) {
+    document.getElementById("double_quote").classList.add("hidden");
+    document.getElementById("ellipsis").classList.toggle("hidden",false);}
+if(state.punct.ellipsis.p) {
+    document.getElementById("ellipsis").classList.add("hidden");
+    document.getElementById("em_dash").classList.toggle("hidden",false);}
+if(state.punct.em_dash.p) {
+    document.getElementById("em_dash").classList.add("hidden");
+    document.getElementById("scare_quote").classList.toggle("hidden",false);}
+if(state.punct.scare_quote.p) {
+    document.getElementById("scare_quote").classList.add("hidden");
+    document.getElementById("guillemets").classList.toggle("hidden",false);}
+if(state.punct.guillemets.p) {
+    document.getElementById("guillemets").classList.add("hidden");
+    document.getElementById("block_quote").classList.toggle("hidden",false);}
+if(state.punct.block_quote.p) {
+    document.getElementById("block_quote").classList.add("hidden");
+    document.getElementById("weird_s").classList.toggle("hidden",false);}
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -324,6 +345,7 @@ function add_outline(){
 function add_article(){
         if(state.word.r >= state.article.cost) {
         state.article.r++;
+        state.references.r++;
         state.word.r = state.word.r - state.article.cost;
         state.word.lim = state.word.lim + 25;
 
@@ -336,6 +358,7 @@ function add_article(){
 function add_book(){
         if(state.word.r >= state.book.cost) {
         state.book.r++;
+        state.references.r++;
         state.word.r = state.word.r - state.book.cost;
         state.word.lim = state.word.lim + 100;
 
@@ -348,6 +371,7 @@ function add_book(){
 function add_anth(){
         if(state.word.r >= state.anth.cost) {
         state.anth.r++;
+        state.references.r++;
         state.word.r = state.word.r - state.anth.cost;
         state.word.lim = state.word.lim + 500;
 
@@ -461,14 +485,14 @@ function update_thought(n){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-function sharper_pencils() {if(state.word.r >= state.tech.sharpcost) {
-    state.word.r = state.word.r - state.tech.sharpcost;
-    state.tech.sharp = true;
+function sharper_pencils() {if(state.word.r >= state.tech.sharp.cost) {
+    state.word.r = state.word.r - state.tech.sharp.cost;
+    state.tech.sharp.p = true;
 }}
 
-function word_processor() {if(state.word.r >= state.tech.processcost) {
-    state.word.r = state.word.r - state.tech.processcost;
-    state.tech.process = true;
+function word_processor() {if(state.word.r >= state.tech.process.cost) {
+    state.word.r = state.word.r - state.tech.process.cost;
+    state.tech.process.p = true;
 }}
 
 function punctuation() {if(state.word.r >= state.tech.punctuation.cost) {
