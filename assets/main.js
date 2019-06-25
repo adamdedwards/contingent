@@ -5,7 +5,7 @@ var precision = 2;
 
 // RESOURCES
 var time =     0.0;
-var pause = false;
+var pause =  false;
 var semester = 0.0;
 var anxiety =  0.0;
 
@@ -26,7 +26,7 @@ book:       {r: 0.0, lim: 0.0, dt: 0.0, tot: 0.0, cost: 100.0, viz: false},
 anth:       {r: 0.0, lim: 0.0, dt: 0.0, tot: 0.0, cost: 1000.0, viz: false},
 outline:    {r: 0.0, lim: 0.0, dt: 0.0, tot: 0.0, cost: 10.0, viz: false},
 seminar:    {r: 0.0, lim: 0.0, dt: 0.0, tot: 0.0, cost: 200.0, viz: false},
-thought:    {r: 0.0, lim: 100.0, dt: 0.001, viz: false},
+thought:    {r: 0.0, lim: 100.0, dt: 0.0002, viz: false},
 anxiety:    {r: 0.0, lim: 100.0, dt: 0.00025, viz: false},
 money:      {r: 1000.0, lim: 100000.0, dt: -0.0225, cost: 0.0, viz: false},
 tech:       {sharp: {p:false, cost: 10}, process: {p: false, cost: 100}, punctuation: {p:false , cost:20}},
@@ -104,9 +104,9 @@ function update_flows(){
 function update_costs(){
     // cost formulas are = base * ratio^quantity * 1-(bool*factor_1) * 1-(bool*factor_2) * ...
 
-    state.sent.cost    = (10 * Math.pow(1.025,state.sent.tot))*(1-(Number(state.punct.period.p)*0.1))*(1-(Number(state.punct.comma.p)*0.1));
-    state.graf.cost    = 10   * Math.pow(1.05,state.graf.tot);
-    state.draft.cost.g = 40   * Math.pow(1.05,state.draft.tot);
+    state.sent.cost    = (10 * Math.pow(1.01,state.sent.tot))*(1-(Number(state.punct.period.p)*0.1))*(1-(Number(state.punct.comma.p)*0.1));
+    state.graf.cost    = 10   * Math.pow(1.02,state.graf.tot);
+    state.draft.cost.g = 20   * Math.pow(1.05,state.draft.tot);
     state.draft.cost.t = 1    * Math.pow(1.00,state.draft.tot);
     state.chapter.cost = 10   * Math.pow(1.05,state.chapter.tot);
     state.diss.cost    = 8    * Math.pow(1.05,state.diss.tot);
@@ -312,14 +312,14 @@ function update_graf(n){
     state.graf.r = state.graf.r + n;
     state.graf.tot = state.graf.tot + n;
     if(state.graf.r > state.graf.lim) {state.graf.r = state.graf.lim;}
-    if(state.sent.r >= 10.0) {state.graf.viz = true;}
+    if(state.sent.r >= 6.0) {state.graf.viz = true;}
 };
 
 function update_draft(n){
     state.draft.r = state.draft.r + n;
     state.draft.tot = state.draft.tot + n;
     if(state.draft.r > state.draft.lim) {state.draft.r = state.draft.lim;}
-    if(state.graf.r >= 10.0) {state.draft.viz = true;}
+    if(state.graf.r >= 6.0) {state.draft.viz = true;}
 };
 
 function update_chapter(n){
@@ -378,11 +378,11 @@ function inc_sent(n){
     }
 };
 
-function inc_graf(){
+function inc_graf(n){
     if(state.graf.lim > state.graf.r && state.sent.r >= state.graf.cost) {
         state.sent.r = state.sent.r - state.graf.cost;
-        state.graf.r = state.graf.r++;
-        state.graf.tot = state.graf.tot++;
+        state.graf.r = state.graf.r + n;
+        state.graf.tot = state.graf.tot + n;
     }
 };
 
@@ -390,24 +390,24 @@ function inc_draft(n){
     if(state.draft.lim > state.draft.r && state.graf.r >= state.draft.cost.g && state.thought.r >= state.draft.cost.t) {
         state.graf.r = state.graf.r - state.draft.cost.g;
         state.thought.r = state.thought.r - state.draft.cost.t;
-        state.draft.r = state.draft.r++;
-        state.draft.tot = state.draft.tot++;
+        state.draft.r = state.draft.r + n;
+        state.draft.tot = state.draft.tot + n;
     }
 };
 
 function inc_chapter(n){
     if(state.chapter.lim > state.chapter.r && state.draft.r >= state.chapter.cost) {
         state.draft.r = state.draft.r - state.chapter.cost;
-        state.chapter.r = state.chapter.r + 1;
-        state.chapter.tot = state.chapter.tot + 1;
+        state.chapter.r = state.chapter.r + n;
+        state.chapter.tot = state.chapter.tot + n;
     }
 };
 
 function inc_dissertation(n){
     if(state.diss.lim > state.diss.r && state.chapter.r >= state.diss.cost) {
         state.chapter.r = state.chapter.r - state.diss.cost;
-        state.diss.r = state.diss.r + 1;
-        state.diss.tot = state.diss.tot + 1;
+        state.diss.r = state.diss.r + n;
+        state.diss.tot = state.diss.tot + n;
     }
 };
 
