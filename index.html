@@ -31,6 +31,9 @@
 <p id="monograph_label" class="hidden"><span>Monographs:</span></p>
 <p id="volume_label" class="hidden"><span>Volumes:</span></p>
 <br>
+<p id="references_label" class="hidden"><span>References:</span></p>
+<p id="bibliography_label" class="hidden"><span>Bibliographies:</span></p>
+<br>
 <p><span id="thought_label">Thoughts:</span></p>
 <p><span id="money_label">Money:</span></p>
 <p class="hidden"><span id="energy_label">Energy:</span></p>
@@ -52,6 +55,9 @@
 <p class="hidden" id="monograph_disp"><span class="stock" id="monograph_stock"></span>/<span class="limit" id="monograph_limit"></span></p>
 <p class="hidden" id="volume_disp"><span class="stock" id="volume_stock"></span>/<span class="limit" id="volume_limit"></span></p>
 <br>
+<p class="hidden" id="references_disp"><span class="stock" id="references_stock"></span>/<span class="limit" id="references_limit"></span></p>
+<p class="hidden" id="bibliography_disp"><span class="stock" id="bibliography_stock"></span>/<span class="limit" id="bibliography_limit"></span></p>
+<br>
 <p><span class="stock" id="thought_stock"></span>/<span class="limit" id="thought_limit"></span></p>
 <p>$<span class="stock" id="money_stock"></span><span class="limit" id="money_limit"></span></p>
 <p class="hidden"><span class="stock" id="energy_stock"></span>/<span class="limit" id="energy_limit"></span></p>
@@ -62,7 +68,7 @@
 </div>
 
 <div id="rate" style="width:210px; float:left;">
-<h3 style="padding-left:30px;">Rates</h3>
+<h3 style="padding-left:30px;">&nbsp;</h3>
 <div id="rates" style="width:200px; float:left;">
 <p><span class="unit">&Delta;t:</span><span class="flow" id="word_dt"></span></p>
 <p class="hidden" id="sent_rate"><span class="unit">&Delta;t:</span><span class="flow" id="sent_dt"></span></p>
@@ -72,6 +78,9 @@
 <p class="hidden" id="dissertation_rate"><span class="unit">&Delta;t:</span><span class="flow" id="dissertation_dt"></span></p>
 <p class="hidden" id="monograph_rate"><span class="unit">&Delta;t:</span><span class="flow" id="monograph_dt"></span></p>
 <p class="hidden" id="volume_rate"><span class="unit">&Delta;t:</span><span class="flow" id="volume_dt"></span></p>
+<br>
+<p class="hidden" id="references_rate">&nbsp;</p>
+<p class="hidden" id="bibliography_rate"></p>
 <br>
 <p><span class="unit">&Delta;t:</span><span class="flow" id="thought_dt"></span></p>
 <p><span class="unit">&Delta;t:</span><span class="flow" id="money_dt"></span></p>
@@ -83,8 +92,8 @@
 
 <div id="write" style="width:18%; float:left;">
 <h3>Write</h3>
-<div><button id="word" onClick="inc_word()">write a word</button></div>
-<div><div id="sent" class="hidden"><button onClick="inc_sent()">compose a sentence</button></div><p class="cost">Cost: <span id="sent_cost"></span> words</p></div>
+<div><button id="word" onClick="inc_word(1)">write a word</button></div>
+<div><div id="sent" class="hidden"><button onClick="inc_sent(1)">compose a sentence</button></div><p class="cost">Cost: <span id="sent_cost"></span> words</p></div>
 <div><div id="graf" class="hidden"><button onClick="inc_graf()">write a paragraph</button></div><p class="cost">Cost: <span id="graf_cost"></span> sentences</p></div>
 <div><div id="draft" class="hidden"><button onClick="inc_draft()">write a draft</button></div><p class="cost">Cost: <span id="draft_cost_g"></span> grafs<br><br><span id="draft_cost_t"></span> thoughts</p></div>
 <div><div id="chapter" class="hidden"><button onClick="inc_chapter()">write a chapter</button></div><p class="cost" >Cost: <span id="chapter_cost"></span> drafts</p></div>
@@ -97,7 +106,7 @@
 <div><div id="article"><button onClick="add_article()">read an article</button><span class="stock" id="article_stock"></span></div><p class="cost"><span class="tech_description">Keep up with the literature.</span><br><br>Increases word limit by 25.<br><br>Cost: <span id="article_cost"></span> words</p></div>
 <div><div id="book"><button onClick="add_book()">read a book</button><span class="stock" id="book_stock"></span></div><p class="cost"><span class="tech_description">Like an article, but longer!</span><br><br>Increases word limit by 100.<br><br>Cost: <span id="book_cost"></span> words</p></div>
 <div><div id="anthology"><button onClick="add_anth()">read an anthology</button><span class="stock" id="anth_stock"></span></div><p class="cost"><span class="tech_description">Someone just published a bunch of someone else's articles.</span><br><br>Increases word limit by 500.<br><br>Cost: <span id="anth_cost"></span> words</p></div>
-<div><div id="outline"><button onClick="add_outline()">outline a paper</button><span class="stock" id="outline_stock"></span></div><p class="cost"><span class="tech_description">Make a plan.</span><br><br>Increases word &Delta;t by 0.5.<br><br>Cost: <span id="outline_cost"></span> words</p></div>
+<div><div id="outline"><button onClick="add_outline()">outline a paper</button><span class="stock" id="outline_stock"></span></div><p class="cost"><span class="tech_description">Make a plan.</span><br><br>Increases word &Delta;t and limit a bit.<br><br>Cost: <span id="outline_cost"></span> words</p></div>
 <div><div id="seminar"><button onClick="add_seminar()">attend seminar</button><span class="stock" id="seminar_stock"></span></div><p class="cost"><span class="tech_description">Go to class.</span><br><br>Increases thought limit by 5.<br><br>Cost: <span id="seminar_cost"></span> words</p></div>
 <div class="hidden"><div><button onClick="function()">syllabus</button><span class="stock" id="_stock"></span></div></div>
 <div class="hidden"><div><button onClick="function()">curriculum vitae</button><span class="stock" id="_stock"></span></div></div>
@@ -107,23 +116,23 @@
 
 <div id="upgrades" class="hidden" style="width:28%; float:left;">
 <h3>Upgrades</h3>
-<div><button id="sharper_pencils" onClick="sharper_pencils()">sharper pencils</button><p class="cost">Sharper pencils for sharper prose. <br><br>Increases word &Delta;t by 1.04.<br><br>Cost: <span id="sharper_pencils_cost"></span> words</p></div>
-<div><button id="word_processor" onClick="word_processor()">word processor</button><p class="cost">Heavily processed words from concentrate.<br><br>Increases word &Delta;t by 4.8.<br><br>Cost: <span id="word_processor_cost"></span> words</p></div>
 <div><button id="punctuation" onClick="punctuation()">punctuation</button><p class="cost">Give your words some structure.<br><br>Unlocks sentences.<br><br>Cost: <span id="punctuation_cost"></span> words</p></div>
+<div><button id="sharper_pencils" onClick="sharper_pencils()">sharper pencils</button><p class="cost">Sharper pencils for sharper prose. <br><br>Increases word &Delta;t.<br><br>Cost: <span id="sharper_pencils_cost"></span> words</p></div>
+<div><button id="word_processor" onClick="word_processor()">word processor</button><p class="cost">Heavily processed words from concentrate.<br><br>Increases word &Delta;t.<br><br>Cost: <span id="word_processor_cost"></span> words</p></div>
 
-<div><div class="hidden" id="period" ><button onClick="period()">periods</button></div><p class="cost">.<br><br>Cost: <span id="period_cost"></span> words</p></div>
-<div><div class="hidden" id="comma"><button onClick="comma()">commas</button></div><p class="cost">,<br><br>Cost: <span id="comma_cost"></span> words</p></div>
-<div><div class="hidden" id="single_quote"><button onClick="single_quote()">single quote</button></div><p class="cost">'<br><br>Cost: <span id="single_quote_cost"></span> words</p></div>
-<div><div class="hidden" id="en_dash"><button onClick="en_dash()">en dash</button></div><p class="cost">–<br><br>Cost: <span id="en_dash_cost"></span> words</p></div>
-<div><div class="hidden" id="semicolon"><button onClick="semicolon()">semicolon</button></div><p class="cost">;<br><br>Cost: <span id="semicolon_cost"></span> words</p></div>
-<div><div class="hidden" id="colon"><button onClick="colon()">colon</button></div><p class="cost">:<br><br>Cost: <span id="colon_cost"></span> words</p></div>
-<div><div class="hidden" id="double_quote"><button onClick="double_quote()">double quote</button></div><p class="cost">"<br><br>Cost: <span id="double_quote_cost"></span> words</p></div>
-<div><div class="hidden" id="ellipsis"><button onClick="ellipsis()">ellipsis</button></div><p class="cost">...<br><br>Cost: <span id="ellipsis_cost"></span> words</p></div>
-<div><div class="hidden" id="em_dash"><button onClick="em_dash()">em dash</button></div><p class="cost">—<br><br>Cost: <span id="em_dash_cost"></span> words</p></div>
-<div><div class="hidden" id="scare_quote"><button onClick="scare_quote()">scare quote</button></div><p class="cost">''<br><br>Cost: <span id="scare_quote_cost"></span> words</p></div>
-<div><div class="hidden" id="guillemets"><button onClick="guillemets()">guillemets</button></div><p class="cost">«»<br><br>Cost: <span id="guillemets_cost"></span> words</p></div>
-<div><div class="hidden" id="block_quote"><button onClick="block_quote()">block quote</button></div><p class="cost">><br><br>Cost: <span id="block_quote_cost"></span> words</p></div>
-<div><div class="hidden" id="weird_s"><button onClick="weird_s()">weird s</button></div><p class="cost">s<br><br>Cost: <span id="weird_s_cost"></span> words</p></div>
+<div><div class="hidden" id="period" ><button onClick="period()">period (.)</button></div><p class="cost">.<br><br>Cost: <span id="period_cost"></span> words</p></div>
+<div><div class="hidden" id="comma"><button onClick="comma()">comma (,)</button></div><p class="cost">,<br><br>Cost: <span id="comma_cost"></span> words</p></div>
+<div><div class="hidden" id="single_quote"><button onClick="single_quote()">single quote (')</button></div><p class="cost">'<br><br>Cost: <span id="single_quote_cost"></span> words</p></div>
+<div><div class="hidden" id="en_dash"><button onClick="en_dash()">en dash (&ndash;)</button></div><p class="cost">–<br><br>Cost: <span id="en_dash_cost"></span> words</p></div>
+<div><div class="hidden" id="semicolon"><button onClick="semicolon()">semicolon (;)</button></div><p class="cost">;<br><br>Cost: <span id="semicolon_cost"></span> words</p></div>
+<div><div class="hidden" id="colon"><button onClick="colon()">colon (:)</button></div><p class="cost">:<br><br>Cost: <span id="colon_cost"></span> words</p></div>
+<div><div class="hidden" id="double_quote"><button onClick="double_quote()">double quote (")</button></div><p class="cost">"<br><br>Cost: <span id="double_quote_cost"></span> words</p></div>
+<div><div class="hidden" id="ellipsis"><button onClick="ellipsis()">ellipsis (...)</button></div><p class="cost">...<br><br>Cost: <span id="ellipsis_cost"></span> words</p></div>
+<div><div class="hidden" id="em_dash"><button onClick="em_dash()">em dash (&mdash;)</button></div><p class="cost">Tell 'em!<br><br>Cost: <span id="em_dash_cost"></span> words</p></div>
+<div><div class="hidden" id="scare_quote"><button onClick="scare_quote()">scare quote (")</button></div><p class="cost">Spooky!<br><br>Cost: <span id="scare_quote_cost"></span> words</p></div>
+<div><div class="hidden" id="guillemets"><button onClick="guillemets()">guillemets («»)</button></div><p class="cost"><br><br>Cost: <span id="guillemets_cost"></span> words</p></div>
+<div><div class="hidden" id="block_quote"><button onClick="block_quote()">block quote ([])</button></div><p class="cost">><br><br>Cost: <span id="block_quote_cost"></span> words</p></div>
+<div><div class="hidden" id="weird_s"><button onClick="weird_s()">weird s ()</button></div><p class="cost">Downright archaic.<br><br>Cost: <span id="weird_s_cost"></span> words</p></div>
 
 <p class="hidden"><button onClick="function()">submit to local newspaper</button><span class="stock" id="_stock"></span></p>
 <p class="hidden"><button onClick="function()">submit to regional magazine</button><span class="stock" id="_stock"></span></p>
