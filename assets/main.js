@@ -1,9 +1,11 @@
 // GAME CONSTANTS
+var run;
 var tick = 125;
 var precision = 2;
 
 // RESOURCES
 var time =     0.0;
+var pause = false;
 var semester = 0.0;
 var anxiety =  0.0;
 
@@ -36,6 +38,7 @@ punct:      {period: {p:false, cost:100}, comma: {p:false, cost:500}, single_quo
 function init() {
     load();
     if(state.night) {darkmode();}
+    run_game();
     update_viz();
 };
 
@@ -60,13 +63,21 @@ function delete_save() {
     location.reload();
 };
 
-window.setInterval(function(){
-    update_time();
-    update_flows();
-    update_costs();
-    update_stocks();
-    update_viz();
-}, tick);
+function run_game() {
+  run = setInterval(function(){
+        update_time();
+        update_flows();
+        update_costs();
+        update_stocks();
+        update_viz();
+    }, tick);
+};
+
+function pause_game() {
+    if(pause) {run_game(); document.getElementById("alert").insertAdjacentHTML('afterbegin', "<p>Game unpaused!</p>");}
+    else {clearInterval(run); document.getElementById("alert").insertAdjacentHTML('afterbegin', "<p>Game paused!</p>");}
+    pause = !pause;
+};
 
 function update_flows(){
     if(state.money.r > 0.0 && state.anxiety.r < 8.0) {
